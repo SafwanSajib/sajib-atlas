@@ -1,0 +1,11 @@
+import type { GeographyCategory, GeographyTopic } from "@/lib/geography-data";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+import PreviousNextNavigation from "@/components/PreviousNextNavigation";
+
+function BulletList({ items }: { items: string[] }) { return <ul className="study-list">{items.map((item) => <li key={item}>{item}</li>)}</ul>; }
+
+export default function TopicStudyPage({ topic, category, previous, next }: { topic: GeographyTopic; category: GeographyCategory; previous?: GeographyTopic; next?: GeographyTopic }) {
+  return <><Navbar /><main className="study-main"><div className="shell"><div className="study-header"><Breadcrumbs current={topic.title} parentHref={`/geography/${category.slug}`} parentLabel={category.title} /><p className="eyebrow">{topic.category}</p><h1>{topic.title}</h1><p className="page-description">{topic.shortDescription}</p><div className="study-meta"><span><small>BCS relevance</small><strong>{topic.examRelevance}</strong></span><span><small>Difficulty</small><strong>{topic.difficulty}</strong></span><span><small>Tags</small><strong>{topic.tags.join(" · ")}</strong></span></div></div><article className="study-content"><section><p className="eyebrow">Overview</p><p className="study-lead">{topic.sections.overview}</p></section><section><p className="eyebrow">Core concept</p><h2>Understand the system</h2><p>{topic.sections.coreConcept}</p></section><section className="study-split"><div><p className="eyebrow">Key facts</p><BulletList items={topic.sections.keyFacts} /></div><div><p className="eyebrow">BCS preli</p><BulletList items={topic.sections.bcsPreli} /></div></section><section><p className="eyebrow">Written</p><h2>Build an analytical answer</h2><BulletList items={topic.sections.writtenPoints} /></section><section className="geography-link"><p className="eyebrow">Geographical link</p><p>{topic.sections.geographyLink}</p></section><section><p className="eyebrow">Quick revision</p><BulletList items={topic.sections.quickRevision} /></section></article><PreviousNextNavigation previous={previous} next={next} categorySlug={category.slug} /></div></main><Footer /></>;
+}

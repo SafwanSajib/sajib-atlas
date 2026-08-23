@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const links = [
   ["Explore", "/explore"],
   ["Atlas", "/geography"],
@@ -9,10 +11,10 @@ export default function Navbar() {
   return (
     <header className="site-header">
       <nav className="shell nav-wrap" aria-label="Main navigation">
-        <a className="brand" href="/" aria-label="Sajib Atlas home">
+        <Link className="brand" href="/" aria-label="Sajib Atlas home">
           <span className="brand-name">SAJIB <b>ATLAS</b></span>
           <span className="brand-tagline">KNOWLEDGE <i>•</i> GEOGRAPHY <i>•</i> GROWTH</span>
-        </a>
+        </Link>
         <div className="desktop-nav">
           {links.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
         </div>
