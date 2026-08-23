@@ -1,4 +1,5 @@
 @import "tailwindcss";
+.study-content { padding-top: 0 !important; }
 
 :root { --ink: #07151d; --ink-soft: #0b2029; --paper: #e8f0ec; --muted: #8ca1a4; --line: rgba(197, 225, 220, .14); --cyan: #63e6d2; --orange: #ff9d66; }
 * { box-sizing: border-box; }
