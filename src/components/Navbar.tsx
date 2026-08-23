@@ -1,15 +1,15 @@
 const links = [
-  ["Explore", "#explore"],
-  ["Atlas", "#atlas"],
-  ["Topics", "#topics"],
-  ["About", "#about"],
+  ["Explore", "/explore"],
+  ["Atlas", "/geography"],
+  ["Topics", "/explore"],
+  ["About", "/about"],
 ];
 
 export default function Navbar() {
   return (
     <header className="site-header">
       <nav className="shell nav-wrap" aria-label="Main navigation">
-        <a className="brand" href="#top" aria-label="Sajib Atlas home">
+        <a className="brand" href="/" aria-label="Sajib Atlas home">
           <span className="brand-name">SAJIB <b>ATLAS</b></span>
           <span className="brand-tagline">KNOWLEDGE <i>•</i> GEOGRAPHY <i>•</i> GROWTH</span>
         </a>

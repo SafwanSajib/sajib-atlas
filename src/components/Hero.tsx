@@ -6,8 +6,8 @@ export default function Hero() {
         <h1>Explore.<br />Learn.<br /><em>Connect.</em></h1>
         <p className="hero-text">A structured knowledge platform for geography, BCS preparation, international affairs, English and beyond.</p>
         <div className="button-row">
-          <a className="button button-primary" href="#explore">Explore Atlas <span>↗</span></a>
-          <a className="button button-quiet" href="#topics">Browse Topics <span>→</span></a>
+          <a className="button button-primary" href="/explore">Explore Atlas <span>↗</span></a>
+          <a className="button button-quiet" href="/explore">Browse Topics <span>→</span></a>
         </div>
       </div>
       <div className="hero-visual" aria-hidden="true">
