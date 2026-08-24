@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import PreviousNextNavigation from "@/components/PreviousNextNavigation";
-
+import MCQPractice from "@/components/MCQPractice";
 function BulletList({ items }: { items: string[] }) {
   return <ul className="study-list">{items.map((item) => <li key={item}>{item}</li>)}</ul>;
 }
@@ -48,17 +48,8 @@ export default function TopicStudyPage({ topic, category, previous, next }: { to
           <StudySection eyebrow="BCS preliminary facts"><BulletList items={topic.sections.bcsPreli} /></StudySection>
           <StudySection eyebrow="BCS written analysis" title="Build an analytical answer"><BulletList items={topic.sections.writtenPoints} /></StudySection>
           <StudySection eyebrow="Common misconceptions"><BulletList items={topic.sections.misconceptions} /></StudySection>
-          <StudySection eyebrow="MCQ practice">
-            <div className="mcq-list">
-              {topic.sections.mcqPractice.map((mcq) => <details className="mcq-card" key={mcq.question}>
-                <summary>{mcq.question}</summary>
-                <ol>{mcq.options.map((option) => <li key={option}>{option}</li>)}</ol>
-                <p><strong>Answer:</strong> {mcq.answer}</p>
-                <p>{mcq.explanation}</p>
-                <p><strong>BCS shortcut / trap:</strong> {mcq.shortcutOrTrap}</p>
-              </details>)}
-            </div>
-          </StudySection>
+          <MCQPractice questions={topic.sections.mcqPractice} />
+
           <StudySection eyebrow="Quick revision"><BulletList items={topic.sections.quickRevision} /></StudySection>
         </article>
         <PreviousNextNavigation previous={previous} next={next} categorySlug={category.slug} />
