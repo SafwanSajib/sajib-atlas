@@ -1,4 +1,4 @@
-import CategoryPage from "@/components/CategoryPage";
+import CategoryPage from "@/components/legacy/CategoryPage";
 import { nestedPages, nestedPaths } from "@/lib/knowledge-data";
 
 export function generateStaticParams() { return nestedPaths.filter((path) => path.startsWith("bcs/")).map((path) => ({ topic: path.split("/")[1] })); }

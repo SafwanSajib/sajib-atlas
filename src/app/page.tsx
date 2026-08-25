@@ -1,11 +1,11 @@
-import BCSSection from "@/components/BCSSection";
-import DomainGrid from "@/components/DomainGrid";
-import FeatureSection from "@/components/FeatureSection";
-import Footer from "@/components/Footer";
-import GeographySection from "@/components/GeographySection";
-import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
-import QuickAccess from "@/components/QuickAccess";
+import Hero from "@/components/layout/Hero";
+import DomainGrid from "@/components/content/DomainGrid";
+import GeographySection from "@/components/legacy/GeographySection";
+import BCSSection from "@/components/legacy/BCSSection";
+import FeatureSection from "@/components/legacy/FeatureSection";
+import QuickAccess from "@/components/shared/QuickAccess";
+import Navbar from "@/components/navigation/Navbar";
+import Footer from "@/components/navigation/Footer";
 
 export default function Home() {
   return <main><Navbar /><Hero /><DomainGrid /><FeatureSection /><BCSSection /><GeographySection /><QuickAccess /><Footer /></main>;

@@ -18,7 +18,8 @@ export default function MCQPractice({ questions }: MCQPracticeProps) {
   }
 
   const currentQuestion = questions[currentIndex];
-  const progress = ((currentIndex + 1) / questions.length) * 100;
+  // Calculate progress safely
+  const progress = Math.round(((currentIndex + 1) / questions.length) * 100);
   const isCorrect = selectedOption === currentQuestion.answer;
   const isLastQuestion = currentIndex === questions.length - 1;
 

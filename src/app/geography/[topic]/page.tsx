@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import GeographyCategoryPage from "@/components/GeographyCategoryPage";
-import TopicStudyPage from "@/components/TopicStudyPage";
+import GeographyCategoryPage from "@/components/legacy/GeographyCategoryPage";
+import TopicStudyPage from "@/components/learning/TopicStudyPage";
 import { allGeographyTopics, geographyCategories, geographyCategoriesBySlug, geographyTopicsBySlug } from "@/lib/geography-data";
 
 export function generateStaticParams() { return [...geographyCategories.map((category) => ({ topic: category.slug })), ...allGeographyTopics.map((topic) => ({ topic: topic.slug }))]; }

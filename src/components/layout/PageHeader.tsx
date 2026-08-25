@@ -1,4 +1,4 @@
-import Breadcrumbs from "@/components/Breadcrumbs";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 
 type PageHeaderProps = { eyebrow: string; title: string; description: string; parentHref?: string; parentLabel?: string };
 

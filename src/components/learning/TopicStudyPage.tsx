@@ -1,9 +1,9 @@
 import type { GeographyCategory, GeographyTopic } from "@/lib/geography-data";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
-import PreviousNextNavigation from "@/components/PreviousNextNavigation";
-import MCQPractice from "@/components/MCQPractice";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
+import Footer from "@/components/navigation/Footer";
+import Navbar from "@/components/navigation/Navbar";
+import PreviousNextNavigation from "@/components/navigation/PreviousNextNavigation";
+import MCQPractice from "@/components/assessment/MCQPractice";
 function BulletList({ items }: { items: string[] }) {
   return <ul className="study-list">{items.map((item) => <li key={item}>{item}</li>)}</ul>;
 }

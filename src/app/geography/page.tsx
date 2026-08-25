@@ -1,4 +1,4 @@
-import GeographyIndexPage from "@/components/GeographyIndexPage";
+import GeographyIndexPage from "@/components/legacy/GeographyIndexPage";
 import { geographyCategories } from "@/lib/geography-data";
 
 export default function GeographyPage() {
