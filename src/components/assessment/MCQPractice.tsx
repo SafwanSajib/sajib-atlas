@@ -1,13 +1,17 @@
 "use client";
 
+import { useLearner } from "@/store/learner/context";
+
 import { useState } from "react";
 import type { MCQQuestion } from "@/lib/geography-data";
 
 type MCQPracticeProps = {
   questions: MCQQuestion[];
+  topicSlug: string;
 };
 
-export default function MCQPractice({ questions }: MCQPracticeProps) {
+export default function MCQPractice({ questions, topicSlug }: MCQPracticeProps) {
+  const { addMCQResult } = useLearner();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -36,6 +40,12 @@ export default function MCQPractice({ questions }: MCQPracticeProps) {
     if (selectedOption === currentQuestion.answer) {
       setScore((previous) => previous + 1);
     }
+    
+    addMCQResult({
+      topicSlug,
+      correct: selectedOption === currentQuestion.answer,
+      timestamp: Date.now(),
+    });
   }
 
   function handleNext() {

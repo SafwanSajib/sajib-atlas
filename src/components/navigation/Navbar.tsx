@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 const links = [
   ["Explore", "/explore"],
@@ -17,6 +18,7 @@ export default function Navbar() {
         </Link>
         <div className="desktop-nav">
           {links.map(([label, href]) => <a key={label} href={href}>{label}</a>)}
+          <SearchBar />
         </div>
         <details className="mobile-nav">
           <summary aria-label="Open navigation menu"><span /> <span /> <span /></summary>

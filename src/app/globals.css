@@ -112,3 +112,14 @@ a { color: inherit; text-decoration: none; }
 .mcq-result-score span { color: var(--muted); font-size: .4em; letter-spacing: -.02em; }
 .mcq-result-message { max-width: 480px; margin: 0 auto 30px; color: var(--muted); line-height: 1.7; }
 @media (max-width: 760px) { .mcq-question-card { padding: 22px; }.mcq-explanation, .mcq-shortcut { padding: 16px; }.mcq-result-card { padding: 36px 22px; } }
+
+.mcq-progress-area { margin-bottom: 20px; }
+.mcq-progress-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+.mcq-progress-track { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.mcq-progress-fill { height: 100%; background: var(--cyan); transition: width .3s ease; }
+.mcq-option { display: grid; grid-template-columns: 48px 1fr 22px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: var(--paper); transition: all .2s ease; cursor: pointer; text-align: left; margin-bottom: 12px; width: 100%;}
+.mcq-option-letter { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(197, 225, 220, .1); border-radius: 6px; font-family: var(--font-geist-mono), monospace; font-weight: 600; }
+.mcq-option-selected { border-color: var(--cyan); background: rgba(99, 230, 210, 0.08); }
+.mcq-option-correct { border-color: #51cf66; background: rgba(81, 207, 102, 0.1); }
+.mcq-option-wrong { border-color: #ff6b6b; background: rgba(255, 107, 107, 0.1); }
+

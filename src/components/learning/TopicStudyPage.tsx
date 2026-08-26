@@ -48,7 +48,8 @@ export default function TopicStudyPage({ topic, category, previous, next }: { to
           <StudySection eyebrow="BCS preliminary facts"><BulletList items={topic.sections.bcsPreli} /></StudySection>
           <StudySection eyebrow="BCS written analysis" title="Build an analytical answer"><BulletList items={topic.sections.writtenPoints} /></StudySection>
           <StudySection eyebrow="Common misconceptions"><BulletList items={topic.sections.misconceptions} /></StudySection>
-          <MCQPractice questions={topic.sections.mcqPractice} />
+          <MCQPractice questions={topic.sections.mcqPractice} topicSlug={topic.slug} />
+
 
           <StudySection eyebrow="Quick revision"><BulletList items={topic.sections.quickRevision} /></StudySection>
         </article>
