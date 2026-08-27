@@ -1,7 +1,10 @@
-import { allGeographyTopics, type GeographyTopic } from "@/lib/geography-data";
+import { curriculumRegistry } from "@/lib/curriculum-registry";
 
-export function searchTopics(query: string): GeographyTopic[] {
+export function searchTopics(query: string) {
   const normalizedQuery = query.trim().toLowerCase();
   if (!normalizedQuery) return [];
-  return allGeographyTopics.filter((topic) => [topic.title, topic.shortDescription, topic.category, ...topic.tags].join(" ").toLowerCase().includes(normalizedQuery));
+  return curriculumRegistry.filter((item) => 
+    item.title.toLowerCase().includes(normalizedQuery) || 
+    item.slug.toLowerCase().includes(normalizedQuery)
+  );
 }
