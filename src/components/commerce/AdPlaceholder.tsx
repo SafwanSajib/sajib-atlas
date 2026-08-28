@@ -1,0 +1,1 @@
+export function AdPlaceholder() { return <aside aria-label="Advertising placeholder" className="card"><p className="eyebrow">Future placement</p><p>Advertising can be introduced here without changing the learning layout.</p></aside>; }
