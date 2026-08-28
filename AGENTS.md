@@ -1,9 +1,23 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# SajibAtlas v10 Agent Guide
 
-# This is NOT the Next.js you know
+SajibAtlas is a knowledge, learning, discovery, growth, and future-commerce platform. The v10 architecture is the source of truth.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Non-negotiable rules
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+- Read `docs/architecture/SAJIB_ATLAS_V10_ARCHITECTURE.md` before changing application structure.
+- Keep content separate from presentation.
+- Prefer Server Components; use Client Components only for genuine interaction.
+- Keep core logic hosting-independent. Vercel-specific integrations must be isolated behind adapters.
+- Do not install a CMS, payment system, database, authentication backend, or AI provider merely for future readiness.
+- Use design tokens and reusable components. Avoid arbitrary one-off styling.
+- Mobile-first, accessible, and SEO-conscious by default.
+- Do not mass-generate educational content before the canonical schema and renderer are validated.
+- High-impact factual, historical, statistical, current-affairs, and exam content requires human review.
+- Never treat an unverified feature as implemented.
+- Do not rewrite Git history or force-push `main` as part of normal development.
 
-<!-- END:nextjs-agent-rules -->
+## Working model
+
+Task → feature branch → implementation → lint → TypeScript → build → route smoke test → review → merge.
+
+The reset work is isolated on `reset/v10-foundation`. Do not modify `main` for reset work.
