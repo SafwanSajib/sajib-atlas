@@ -1,5 +1,0 @@
-import Link from "next/link";
-
-export default function GeographySection() {
-  return <section className="geo-section"><div className="shell geo-layout"><div><p className="eyebrow">A different point of view</p><h2>The World,<br /><em>spatially understood.</em></h2><p className="geo-copy">Explore places, regions, physical systems, geopolitics and the geographic forces shaping the modern world.</p><Link className="text-link" href="/geography">Explore geography <span>↗</span></Link></div><div className="world-visual" aria-label="Abstract network map representing connected places"><div className="map-grid" /><div className="continent continent-one" /><div className="continent continent-two" /><div className="continent continent-three" /><span className="map-node node-a" /><span className="map-node node-b" /><span className="map-node node-c" /><span className="map-node node-d" /><span className="map-line line-a" /><span className="map-line line-b" /><span className="map-line line-c" /><div className="map-coordinates">23°48′N<br />90°24′E</div></div></div></section>;
-}
