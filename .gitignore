@@ -44,3 +44,4 @@ next-env.d.ts
 
 # Next.js generated prerender metadata
 prerender.txt
+.env.local
