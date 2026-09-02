@@ -1,3 +1,10 @@
+import {
+  canonicalHref,
+  getCanonicalTopic,
+  getCanonicalTopicsBySubject,
+  requireCanonicalTopic,
+} from "@/lib/content/manifest";
+
 export type Topic = {
   slug: string;
   title: string;
@@ -18,7 +25,18 @@ export type CategoryPageData = {
   parentLabel?: string;
 };
 
+/**
+ * Catalog page copy and navigation cards.
+ * Canonical topic identity (id, title, slug, href) lives in the content manifest.
+ * This file keeps descriptions, labels, grouping cards, and nested stub page content.
+ */
 const topic = (slug: string, title: string, label: string, description: string, href: string): Topic => ({ slug, title, label, description, href });
+
+/** Catalog card whose identity/href come from the canonical manifest. */
+const canonicalTopicCard = (id: string, label: string, description: string): Topic => {
+  const entry = requireCanonicalTopic(id);
+  return topic(entry.slug, entry.title, label, description, entry.href);
+};
 
 export const categoryPages: Record<string, CategoryPageData> = {
   explore: {
@@ -31,13 +49,13 @@ export const categoryPages: Record<string, CategoryPageData> = {
     ], nextTitle: "Start with a question", nextDescription: "The Atlas will grow around the subjects you return to most. Choose a domain and begin building context.",
   },
   bcs: { slug: "bcs", eyebrow: "The command center", title: "BCS Preparation", description: "Turn a wide syllabus into a visible, connected path through knowledge, practice and revision.", topics: [
-    topic("bangladesh-affairs", "Bangladesh Affairs", "National context", "History, society, economy and identity of Bangladesh.", "/bcs/bangladesh-affairs"), topic("international-affairs", "International Affairs", "Global perspective", "Events, institutions and ideas that connect the world.", "/bcs/international-affairs"), topic("geography-environment", "Geography & Environment", "Spatial knowledge", "Physical systems, resources, environment and Bangladesh geography.", "/bcs/geography-environment"), topic("english", "English", "Language lab", "Grammar, vocabulary and communication for the competitive exam.", "/bcs/english"), topic("bangla", "Bangla", "Language & literature", "Language, literature and the cultural foundations of Bangladesh.", "/bcs/bangla"), topic("science-ict", "Science & ICT", "Future signals", "Core science concepts and the digital world around us.", "/bcs/science-ict"), topic("ethics-governance", "Ethics & Governance", "Public purpose", "The principles, institutions and responsibilities of public service.", "/bcs/ethics-governance"),
+    canonicalTopicCard("bcs/bangladesh-affairs", "National context", "History, society, economy and identity of Bangladesh."), canonicalTopicCard("bcs/international-affairs", "Global perspective", "Events, institutions and ideas that connect the world."), canonicalTopicCard("bcs/geography-environment", "Spatial knowledge", "Physical systems, resources, environment and Bangladesh geography."), canonicalTopicCard("bcs/english", "Language lab", "Grammar, vocabulary and communication for the competitive exam."), canonicalTopicCard("bcs/bangla", "Language & literature", "Language, literature and the cultural foundations of Bangladesh."), canonicalTopicCard("bcs/science-ict", "Future signals", "Core science concepts and the digital world around us."), canonicalTopicCard("bcs/ethics-governance", "Public purpose", "The principles, institutions and responsibilities of public service."),
   ], nextTitle: "A focused preparation loop", nextDescription: "Next, each domain will grow into notes, practice sets and revision trails that make progress easier to see.", },
   geography: { slug: "geography", eyebrow: "The spatial atlas", title: "Geography", description: "Understand places through patterns, processes and the relationships between people and their environments.", topics: [
-    topic("physical", "Physical Geography", "Earth systems", "Landforms, climate, oceans and the living systems of the planet.", "/geography/physical"), topic("human", "Human Geography", "People & place", "Population, culture, cities, migration and spatial identity.", "/geography/human"), topic("economic", "Economic Geography", "Networks & resources", "Production, trade, resources and the geography of opportunity.", "/geography/economic"), topic("environmental", "Environmental Geography", "Planetary balance", "Human impact, risk, conservation and sustainable futures.", "/geography/environmental"), topic("bangladesh", "Geography of Bangladesh", "A living delta", "The rivers, regions, settlements and systems of Bangladesh.", "/geography/bangladesh"),
+    topic("physical-geography", "Physical Geography", "Earth systems", "Landforms, climate, oceans and the living systems of the planet.", canonicalHref("geography", "physical-geography")), topic("human-geography", "Human Geography", "People & place", "Population, culture, cities, migration and spatial identity.", canonicalHref("geography", "human-geography")), topic("economic-geography", "Economic Geography", "Networks & resources", "Production, trade, resources and the geography of opportunity.", canonicalHref("geography", "economic-geography")), topic("environmental-geography", "Environmental Geography", "Planetary balance", "Human impact, risk, conservation and sustainable futures.", canonicalHref("geography", "environmental-geography")), topic("geography-of-bangladesh", "Geography of Bangladesh", "A living delta", "The rivers, regions, settlements and systems of Bangladesh.", canonicalHref("geography", "geography-of-bangladesh")),
   ], nextTitle: "Read the world in layers", nextDescription: "The next stage adds maps, regional explainers and connected geographic concepts to each part of the Atlas.", },
   english: { slug: "english", eyebrow: "The language lab", title: "English & IELTS", description: "Build precise grammar, a richer working vocabulary and the confidence to communicate clearly.", topics: [
-    topic("grammar", "Grammar", "Structure", "Sentence patterns, usage and the rules that make meaning precise.", "/english/grammar"), topic("vocabulary", "Vocabulary", "Word power", "Learn words through context, nuance and memorable connections.", "/english/vocabulary"), topic("literature", "Literature", "Language & culture", "Authors, movements and the ideas that shape English expression.", "/english/literature"), topic("ielts", "IELTS", "Exam readiness", "A practical path through reading, writing, listening and speaking.", "/english/ielts"),
+    canonicalTopicCard("english/grammar", "Structure", "Sentence patterns, usage and the rules that make meaning precise."), canonicalTopicCard("english/vocabulary", "Word power", "Learn words through context, nuance and memorable connections."), canonicalTopicCard("english/literature", "Language & culture", "Authors, movements and the ideas that shape English expression."), canonicalTopicCard("english/ielts", "Exam readiness", "A practical path through reading, writing, listening and speaking."),
   ], nextTitle: "Make language active", nextDescription: "Practice materials and short revision routines will turn each language area into a repeatable daily habit.", },
   "international-affairs": { slug: "international-affairs", eyebrow: "The global desk", title: "International Affairs", description: "Follow the institutions, events and ideas that shape a connected world.", topics: [topic("world-order", "World Order", "Systems", "Power, alliances and the changing architecture of global affairs.", "/international-affairs"), topic("institutions", "Global Institutions", "Cooperation", "The organizations and agreements that organize international action.", "/international-affairs"), topic("current-affairs", "Current Affairs", "Signals", "A structured place for important events and their wider context.", "/international-affairs")], nextTitle: "Context before headlines", nextDescription: "This desk will become a living briefing space for linking current events to history, geography and policy.", },
   research: { slug: "research", eyebrow: "The field notes", title: "Research", description: "A quiet workspace for questions, methods, geographic thinking and work in progress.", topics: [topic("gis", "GIS & Mapping", "Methods", "Spatial data, mapping workflows and geographic analysis.", "/research"), topic("fieldwork", "Fieldwork", "Observation", "Questions and notes gathered from places, people and landscapes.", "/research"), topic("reading-room", "Reading Room", "References", "A growing index of papers, books and useful sources.", "/research")], nextTitle: "Questions worth keeping", nextDescription: "Research tools and reading notes will gradually connect the Atlas to longer-form academic work.", },
@@ -54,9 +72,32 @@ export const nestedPages: Record<string, CategoryPageData> = {
   "bcs/ethics-governance": { slug: "ethics-governance", eyebrow: "BCS / public purpose", title: "Ethics & Governance", description: "Understand the principles, institutions and responsibilities of public service.", parentHref: "/bcs", parentLabel: "BCS Preparation", topics: [topic("ethics", "Ethics", "Principles", "Values and reasoning for responsible public action.", "/bcs/ethics-governance"), topic("governance", "Governance", "Institutions", "Accountability, administration and the work of the state.", "/bcs/ethics-governance")], nextTitle: "From principle to practice", nextDescription: "Case studies and concise frameworks will make abstract governance ideas easier to apply." },
 };
 
-const geographyNested = [["physical", "Physical Geography", "Earth systems", "Landforms, climate, oceans and the living systems of the planet."], ["human", "Human Geography", "People & place", "Population, culture, cities, migration and spatial identity."], ["economic", "Economic Geography", "Networks & resources", "Production, trade, resources and the geography of opportunity."], ["environmental", "Environmental Geography", "Planetary balance", "Human impact, risk, conservation and sustainable futures."], ["bangladesh", "Geography of Bangladesh", "A living delta", "The rivers, regions, settlements and systems of Bangladesh."]];
-for (const [slug, title, label, description] of geographyNested) nestedPages[`geography/${slug}`] = { slug, eyebrow: `Geography / ${label}`, title, description, parentHref: "/geography", parentLabel: "Geography", topics: [topic(`${slug}-foundations`, `${title} Foundations`, "Core concepts", description, `/geography/${slug}`), topic(`${slug}-connections`, "Connected systems", "Patterns", "See how this domain links people, place, process and change.", `/geography/${slug}`)], nextTitle: "Maps are next", nextDescription: "This section will grow with diagrams, regional examples and visual explainers." };
-const englishNested = [["grammar", "Grammar", "Structure", "Sentence patterns, usage and the rules that make meaning precise."], ["vocabulary", "Vocabulary", "Word power", "Learn words through context, nuance and memorable connections."], ["literature", "Literature", "Language & culture", "Authors, movements and the ideas that shape English expression."], ["ielts", "IELTS", "Exam readiness", "A practical path through reading, writing, listening and speaking."]];
-for (const [slug, title, label, description] of englishNested) nestedPages[`english/${slug}`] = { slug, eyebrow: `English / ${label}`, title, description, parentHref: "/english", parentLabel: "English & IELTS", topics: [topic(`${slug}-guide`, `${title} Guide`, "Core concepts", description, `/english/${slug}`), topic(`${slug}-practice`, "Practice space", "Application", "Short exercises and revision prompts for active learning.", `/english/${slug}`)], nextTitle: "Practice makes language", nextDescription: "Examples, drills and revision paths will be added here as the language lab expands." };
+const englishNested: [string, string, string, string][] = [["grammar", "Grammar", "Structure", "Sentence patterns, usage and the rules that make meaning precise."], ["vocabulary", "Vocabulary", "Word power", "Learn words through context, nuance and memorable connections."], ["literature", "Literature", "Language & culture", "Authors, movements and the ideas that shape English expression."], ["ielts", "IELTS", "Exam readiness", "A practical path through reading, writing, listening and speaking."]];
+for (const [slug, title, label, description] of englishNested) {
+  const entry = requireCanonicalTopic(`english/${slug}`);
+  nestedPages[entry.id] = { slug: entry.slug, eyebrow: `English / ${label}`, title: entry.title, description, parentHref: "/english", parentLabel: "English & IELTS", topics: [topic(`${slug}-guide`, `${title} Guide`, "Core concepts", description, entry.href), topic(`${slug}-practice`, "Practice space", "Application", "Short exercises and revision prompts for active learning.", entry.href)], nextTitle: "Practice makes language", nextDescription: "Examples, drills and revision paths will be added here as the language lab expands." };
+}
+
+for (const path of Object.keys(nestedPages)) {
+  const entry = getCanonicalTopic(path);
+  if (!entry) {
+    throw new Error(`knowledge-data nestedPages path is not a canonical topic: ${path}`);
+  }
+  const page = nestedPages[path];
+  if (!page) {
+    throw new Error(`knowledge-data nestedPages missing page: ${path}`);
+  }
+  page.slug = entry.slug;
+  page.title = entry.title;
+}
+
+for (const entry of [
+  ...getCanonicalTopicsBySubject("bcs"),
+  ...getCanonicalTopicsBySubject("english"),
+]) {
+  if (!nestedPages[entry.id]) {
+    throw new Error(`canonical topic missing nested catalog page: ${entry.id}`);
+  }
+}
 
 export const nestedPaths = Object.keys(nestedPages);

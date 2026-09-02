@@ -4,7 +4,9 @@ import SearchBar from "./SearchBar";
 const links = [
   ["Explore", "/explore"],
   ["Atlas", "/geography"],
-  ["Topics", "/explore"],
+  ["Ask", "/ai"],
+  ["Dashboard", "/dashboard"],
+  ["Revision", "/revision"],
   ["About", "/about"],
 ];
 

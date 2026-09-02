@@ -2,6 +2,15 @@ import { notFound } from "next/navigation";
 import GeographyCategoryPage from "@/components/legacy/GeographyCategoryPage";
 import TopicStudyPage from "@/components/learning/TopicStudyPage";
 import { allGeographyTopics, geographyCategories, geographyCategoriesBySlug, geographyTopicsBySlug } from "@/lib/geography-data";
+import { contentManifest } from "@/lib/content/manifest";
+import { assertSubjectPayloadCoverage } from "@/lib/content/validate";
+
+assertSubjectPayloadCoverage({
+  subject: "geography",
+  payloadSlugs: allGeographyTopics.map((topic) => topic.slug),
+  payloadCategorySlugs: geographyCategories.map((category) => category.slug),
+  manifest: contentManifest,
+});
 
 export function generateStaticParams() { return [...geographyCategories.map((category) => ({ topic: category.slug })), ...allGeographyTopics.map((topic) => ({ topic: topic.slug }))]; }
 

@@ -1,12 +1,8 @@
+import type { MCQQuestion } from "@/lib/assessment/types";
+
 export type Difficulty = "Foundation" | "Intermediate" | "Advanced";
 
-export type MCQQuestion = {
-  question: string;
-  options: string[];
-  answer: string;
-  explanation: string;
-  shortcutOrTrap: string;
-};
+export type { MCQQuestion };
 
 export type TopicSections = {
   overview: string;

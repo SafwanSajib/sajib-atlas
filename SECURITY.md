@@ -56,6 +56,30 @@ Consider:
 
 Use server-authoritative authorization for protected operations.
 
+Canonical learner identity is internally controlled. The local identity is
+`learner/local`. Email, phone, OAuth/provider subject, session tokens, and
+access tokens must never become the canonical `learnerId`. Authentication
+is not implemented in Phase 7A. Public identity reads omit secrets,
+credentials, and provider subjects.
+
+Protected access is fail-closed. Entitlement is the access authority.
+Payment events, purchase claims, and client-supplied flags must not grant
+access. Public catalog resources remain freely readable without
+authentication. Entitlement records must not carry secrets, tokens, or
+payment instruments.
+
+Commerce payments must never store card numbers, CVV, passwords, API keys,
+or raw provider payloads. `providerReference` is opaque. Public payment
+reads omit provider internals. A captured payment is not an access grant.
+
+Phase 7D confirms: Identity is not authentication; Entitlement is the
+access authority; Commerce proposes grants only; client UI cannot authorize
+identity, entitlement, purchase, or payment.
+
+Phase 9A: Web/Android/iOS clients consume Phase 8 contracts. A client
+cache is not access. Device id is not `learnerId`. Push (future) is
+navigation only, not a grant. Notes: `docs/MOBILE.md`.
+
 Never assume:
 
 - hidden UI

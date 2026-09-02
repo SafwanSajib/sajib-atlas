@@ -21,11 +21,11 @@ export default function RevisionPage() {
         ) : (
           <div className="revision-queue">
             {queue.map((item) => (
-              <div key={item.topicSlug} className="intelligence-card">
+              <div key={item.topicId} className="intelligence-card">
                 <h3>{item.topicTitle}</h3>
                 <p><strong>Reason:</strong> {item.reason}</p>
                 <p><strong>Accuracy:</strong> {Math.round(item.accuracy * 100)}%</p>
-                <a href={`/${item.subject}/${item.topicSlug}`} className="button-primary">Review Topic</a>
+                <a href={item.href} className="button-primary">Review Topic</a>
               </div>
             ))}
           </div>

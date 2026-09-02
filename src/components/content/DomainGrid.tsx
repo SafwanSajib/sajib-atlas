@@ -1,4 +1,4 @@
-import { curriculumRegistry } from "@/lib/curriculum-registry";
+import { getCanonicalTopicsBySubject } from "@/lib/content/manifest";
 
 const domains = [
   { label: "01", title: "Geography", description: "Spatial knowledge & Earth systems", href: "/geography" },
@@ -19,7 +19,7 @@ export default function DomainGrid() {
       <div id="topics" className="domain-grid">
         {domains.map((domain) => {
           const id = domain.href.substring(1);
-          const count = curriculumRegistry.filter((item) => item.subject === id).length;
+          const count = getCanonicalTopicsBySubject(id).length;
           return (
             <a className="domain-card" href={domain.href} key={domain.title}>
               <div className="card-top">

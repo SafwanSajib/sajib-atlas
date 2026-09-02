@@ -1,9 +1,11 @@
 import type { GeographyCategory, GeographyTopic } from "@/lib/geography-data";
+import { canonicalHref, getCanonicalTopic } from "@/lib/content/manifest";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/navigation/Footer";
 import Navbar from "@/components/navigation/Navbar";
 import PreviousNextNavigation from "@/components/navigation/PreviousNextNavigation";
 import MCQPractice from "@/components/assessment/MCQPractice";
+import TopicCompletionControl from "@/components/learning/TopicCompletionControl";
 function BulletList({ items }: { items: string[] }) {
   return <ul className="study-list">{items.map((item) => <li key={item}>{item}</li>)}</ul>;
 }
@@ -17,12 +19,13 @@ function OptionalStudySection({ eyebrow, items }: { eyebrow: string; items?: str
 }
 
 export default function TopicStudyPage({ topic, category, previous, next }: { topic: GeographyTopic; category: GeographyCategory; previous?: GeographyTopic; next?: GeographyTopic }) {
+  const canonicalTopic = getCanonicalTopic(`geography/${topic.slug}`);
   return <>
     <Navbar />
     <main className="study-main">
       <div className="shell">
         <div className="study-header">
-          <Breadcrumbs current={topic.title} parentHref={`/geography/${category.slug}`} parentLabel={category.title} />
+          <Breadcrumbs current={topic.title} parentHref={canonicalHref("geography", category.slug)} parentLabel={category.title} />
           <p className="eyebrow">{topic.category}</p>
           <h1>{topic.title}</h1>
           <p className="page-description">{topic.shortDescription}</p>
@@ -31,6 +34,14 @@ export default function TopicStudyPage({ topic, category, previous, next }: { to
             <span><small>Difficulty</small><strong>{topic.difficulty}</strong></span>
             <span><small>Tags</small><strong>{topic.tags.join(" · ")}</strong></span>
           </div>
+          <TopicCompletionControl topicSlug={topic.slug} />
+          {canonicalTopic ? (
+            <p className="ai-topic-link">
+              <a className="text-link" href={`/ai?topic=${encodeURIComponent(canonicalTopic.id)}&intent=explain-topic`}>
+                Ask about this topic <span>↗</span>
+              </a>
+            </p>
+          ) : null}
         </div>
         <article className="study-content">
           <StudySection eyebrow="Summary"><p className="study-lead">{topic.sections.englishSummary}</p></StudySection>

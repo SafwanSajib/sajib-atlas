@@ -1,21 +1,14 @@
 import type { MetadataRoute } from "next";
 
+import { categoryPages } from "@/lib/knowledge-data";
 import {
-  categoryPages,
-  nestedPages,
-} from "@/lib/knowledge-data";
-
-import {
-  geographyCategories,
-  allGeographyTopics,
-} from "@/lib/geography-data";
+  contentManifest,
+  getGeographyGroupingHrefs,
+} from "@/lib/content/manifest";
 
 const BASE_URL = "https://sajibatlas.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  /*
-   * Main/static pages
-   */
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -36,53 +29,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    {
+      url: `${BASE_URL}/dashboard`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/revision`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
+      url: `${BASE_URL}/ai`,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
   ];
 
-  /*
-   * BCS / English nested pages
-   */
-  const nestedRoutes: MetadataRoute.Sitemap = Object.keys(nestedPages).map(
-    (path) => ({
-      url: `${BASE_URL}/${path}`,
+  const canonicalTopicRoutes: MetadataRoute.Sitemap = contentManifest.map(
+    (topic) => ({
+      url: `${BASE_URL}${topic.href}`,
       changeFrequency: "monthly" as const,
       priority: 0.8,
-    })
+    }),
   );
 
   /*
-   * Geography category pages
-   *
-   * Example:
-   * /geography/physical-geography
-   * /geography/human-geography
-   * /geography/economic-geography
+   * Geography category grouping pages are live /geography/[category] routes.
+   * They are not canonical study topics; hrefs are derived from unique
+   * Geography category keys on the manifest.
    */
-  const geographyCategoryRoutes: MetadataRoute.Sitemap =
-    geographyCategories.map((category) => ({
-      url: `${BASE_URL}/geography/${category.slug}`,
+  const geographyGroupingRoutes: MetadataRoute.Sitemap =
+    getGeographyGroupingHrefs().map((href) => ({
+      url: `${BASE_URL}${href}`,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     }));
 
-  /*
-   * All individual Geography topic pages
-   *
-   * Example:
-   * /geography/earths-rotation
-   * /geography/plate-tectonics
-   * /geography/rivers-of-bangladesh
-   */
-  const geographyTopicRoutes: MetadataRoute.Sitemap =
-    allGeographyTopics.map((topic) => ({
-      url: `${BASE_URL}/geography/${topic.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
-    }));
-
-  return [
-    ...staticRoutes,
-    ...nestedRoutes,
-    ...geographyCategoryRoutes,
-    ...geographyTopicRoutes,
-  ];
+  return [...staticRoutes, ...canonicalTopicRoutes, ...geographyGroupingRoutes];
 }

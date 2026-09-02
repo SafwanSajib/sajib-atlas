@@ -65,6 +65,8 @@ Do not duplicate:
 - AI business logic
 Current priority:
 **WEB → MOBILE-READY CORE → ANDROID → iOS → INSTITUTIONAL / B2B**
+Phase 9A designs the client architecture (`docs/MOBILE.md`). Do not
+add Android/iOS apps, React Native/Flutter, or native SDKs in 9A.
 ## KNOWLEDGE RULE
 Canonical knowledge must be reusable.
 **KNOWLEDGE ≠ EXAM ≠ PRESENTATION**

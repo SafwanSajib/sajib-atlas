@@ -1,16 +1,29 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { LearnerState, MCQResult } from "./types";
+import { createContext, useContext, useState } from "react";
+import type { LearnerState, MCQResult } from "./types";
 import { getLearnerState, saveLearnerState } from "./storage";
+import { hasCompletionEntry } from "./completion";
+import {
+  getCanonicalTopic,
+  getCanonicalTopicBySlug,
+} from "@/lib/content/manifest";
 
 type LearnerContextType = {
   state: LearnerState;
   addMCQResult: (result: MCQResult) => void;
-  markTopicComplete: (slug: string) => void;
+  markTopicComplete: (topicId: string) => void;
 };
 
 const LearnerContext = createContext<LearnerContextType | undefined>(undefined);
+
+function resolveCanonicalId(topicId: string): string {
+  return (
+    getCanonicalTopic(topicId)?.id ??
+    getCanonicalTopicBySlug(topicId)?.id ??
+    topicId
+  );
+}
 
 export const LearnerProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, setState] = useState<LearnerState>(() => {
@@ -19,16 +32,25 @@ export const LearnerProvider = ({ children }: { children: React.ReactNode }) => 
   });
 
   const addMCQResult = (result: MCQResult) => {
-    const newState = { ...state, mcqResults: [...state.mcqResults, result] };
-    setState(newState);
-    saveLearnerState(newState);
+    setState((current) => {
+      const newState = { ...current, mcqResults: [...current.mcqResults, result] };
+      saveLearnerState(newState);
+      return newState;
+    });
   };
 
-  const markTopicComplete = (slug: string) => {
-    if (state.completedTopics.includes(slug)) return;
-    const newState = { ...state, completedTopics: [...state.completedTopics, slug] };
-    setState(newState);
-    saveLearnerState(newState);
+  const markTopicComplete = (topicId: string) => {
+    setState((current) => {
+      if (hasCompletionEntry(current, topicId)) return current;
+      const canonicalId = resolveCanonicalId(topicId);
+      if (hasCompletionEntry(current, canonicalId)) return current;
+      const newState = {
+        ...current,
+        completedTopics: [...current.completedTopics, canonicalId],
+      };
+      saveLearnerState(newState);
+      return newState;
+    });
   };
 
   return (
@@ -43,4 +65,3 @@ export const useLearner = () => {
   if (!context) throw new Error("useLearner must be used within a LearnerProvider");
   return context;
 };
-

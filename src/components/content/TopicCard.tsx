@@ -1,5 +1,6 @@
 import type { GeographyTopic } from "@/lib/geography-data";
 import type { Topic } from "@/lib/knowledge-data";
+import { requireCanonicalTopic } from "@/lib/content/manifest";
 
 type DisplayTopic = Topic | GeographyTopic;
 
@@ -19,7 +20,7 @@ export default function TopicCard({
     : topic.description;
 
   const href = isGeographyTopic
-    ? `/geography/${topic.slug}`
+    ? requireCanonicalTopic(`geography/${topic.slug}`).href
     : topic.href;
 
   return (

@@ -1,5 +1,6 @@
-import { MCQResult, LearnerState } from "./types";
-import { curriculumRegistry, CurriculumItem } from "@/lib/curriculum-registry";
+import type { LearnerState } from "./types";
+import { contentManifest } from "@/lib/content/manifest";
+import { isTopicCompleted } from "./completion";
 
 export type TopicInsight = {
   topicSlug: string;
@@ -47,8 +48,10 @@ export const calculateTopicInsight = (
 };
 
 export type RevisionCandidate = {
+  topicId: string;
   topicSlug: string;
   topicTitle: string;
+  href: string;
   reason: string;
   priority: number;
 };
@@ -56,15 +59,17 @@ export type RevisionCandidate = {
 export const calculateRevisionCandidates = (state: LearnerState): RevisionCandidate[] => {
   const candidates: RevisionCandidate[] = [];
 
-  for (const item of curriculumRegistry) {
+  for (const item of contentManifest) {
     const insight = calculateTopicInsight(item.slug, state);
     
     if (insight.status === "weak" && insight.attempted >= MIN_EVIDENCE_THRESHOLD) {
-      candidates.push({ 
-        topicSlug: item.slug, 
+      candidates.push({
+        topicId: item.id,
+        topicSlug: item.slug,
         topicTitle: item.title,
+        href: item.href,
         reason: `Low quiz accuracy (${Math.round(insight.accuracy! * 100)}%)`,
-        priority: 1 
+        priority: 1,
       });
     }
   }
@@ -85,18 +90,20 @@ export const suggestNextAction = (state: LearnerState): NextAction => {
   if (revision.length > 0) {
     return {
       text: `Review ${revision[0].topicTitle}`,
-      link: `/${getSubjectFromSlug(revision[0].topicSlug)}/${revision[0].topicSlug}`,
+      link: revision[0].href,
       type: "review",
       reason: revision[0].reason,
       topicTitle: revision[0].topicTitle
     };
   }
 
-  const nextUncompleted = curriculumRegistry.find(item => !state.completedTopics.includes(item.slug) && item.contentStatus === 'available');
+  const nextUncompleted = contentManifest.find(
+    (item) => item.contentStatus === "available" && !isTopicCompleted(state, item),
+  );
   if (nextUncompleted) {
     return {
       text: `Learn ${nextUncompleted.title}`,
-      link: `/${nextUncompleted.subject}/${nextUncompleted.slug}`,
+      link: nextUncompleted.href,
       type: "continue",
     };
   }
@@ -107,6 +114,4 @@ export const suggestNextAction = (state: LearnerState): NextAction => {
     type: "continue",
   };
 };
-
-const getSubjectFromSlug = (slug: string) => curriculumRegistry.find(i => i.slug === slug)?.subject || 'geography';
 

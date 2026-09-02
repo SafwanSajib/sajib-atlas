@@ -3,7 +3,9 @@
 import { useLearner } from "@/store/learner/context";
 
 import { useState } from "react";
-import type { MCQQuestion } from "@/lib/geography-data";
+import type { MCQQuestion } from "@/lib/assessment/types";
+import { isAnswerCorrect, nextScore } from "@/lib/assessment/scoring";
+import { getCanonicalTopic } from "@/lib/content/manifest";
 
 type MCQPracticeProps = {
   questions: MCQQuestion[];
@@ -24,7 +26,7 @@ export default function MCQPractice({ questions, topicSlug }: MCQPracticeProps) 
   const currentQuestion = questions[currentIndex];
   // Calculate progress safely
   const progress = Math.round(((currentIndex + 1) / questions.length) * 100);
-  const isCorrect = selectedOption === currentQuestion.answer;
+  const isCorrect = isAnswerCorrect(currentQuestion, selectedOption);
   const isLastQuestion = currentIndex === questions.length - 1;
 
   function handleSelect(option: string) {
@@ -37,13 +39,15 @@ export default function MCQPractice({ questions, topicSlug }: MCQPracticeProps) 
 
     setSubmitted(true);
 
-    if (selectedOption === currentQuestion.answer) {
-      setScore((previous) => previous + 1);
+    const correct = isAnswerCorrect(currentQuestion, selectedOption);
+
+    if (correct) {
+      setScore((previous) => nextScore(previous, true));
     }
-    
+
     addMCQResult({
       topicSlug,
-      correct: selectedOption === currentQuestion.answer,
+      correct,
       timestamp: Date.now(),
     });
   }
@@ -65,6 +69,7 @@ export default function MCQPractice({ questions, topicSlug }: MCQPracticeProps) 
 
   if (submitted && isLastQuestion) {
     const finalScore = score;
+    const canonicalTopic = getCanonicalTopic(`geography/${topicSlug}`);
 
     return (
       <section className="mcq-practice">
@@ -97,6 +102,16 @@ export default function MCQPractice({ questions, topicSlug }: MCQPracticeProps) 
           >
             Practice Again
           </button>
+          {canonicalTopic ? (
+            <p className="ai-topic-link">
+              <a
+                className="text-link"
+                href={`/ai?topic=${encodeURIComponent(canonicalTopic.id)}&intent=explain-topic&style=exam-focused`}
+              >
+                Ask about this topic <span>↗</span>
+              </a>
+            </p>
+          ) : null}
         </div>
       </section>
     );
