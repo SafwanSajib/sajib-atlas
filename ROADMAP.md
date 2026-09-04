@@ -1,18 +1,32 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless
+`CURRENT_STATE.md` and the repository confirm them.
 
-# ROADMAP.md — V10.6 PRODUCT & ENGINEERING ROADMAP
+# ROADMAP.md — V10.7 PRODUCT & ENGINEERING ROADMAP
+
+V10.7 is the current architectural evolution: Product, Brand & Platform
+Expansion Architecture. It is documentation only. It does not start a new
+engineering phase, domain deployment, or product implementation.
+
+Historical Phase 0–9F progression below remains the V10.6 engineering
+roadmap and is preserved as history plus still-valid later vision phases.
+Immediate execution remains canonical Geography production.
+
+Detailed V10.7 specification:
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
 
 ## Phase 0 — Stabilize Current Web
 
@@ -63,9 +77,10 @@ Implemented: **Universal MCQ Assessment Engine**
 - verification: `npm run verify:assessment-engine` and
   `npm run verify:assessment-integration`
 - only MCQ is concrete; other modalities are reserved vocabulary
-- UI integration, learner intelligence, analytics collection, HTTP API,
-  mobile clients, persistence, entitlement, and commerce remain deferred
-- existing `MCQPractice.tsx` still uses `src/lib/assessment/scoring.ts`
+- Web UI integration and local learner ingestion are implemented through
+  Assessment Engine sessions and canonical results.
+- Analytics collection, server persistence, entitlement, commerce, and mobile
+  clients remain deferred.
 
 This increment is distinct from Roadmap Phase 3 — AI Foundation below,
 which is not started.
@@ -81,8 +96,9 @@ Implemented: **deterministic AssessmentResult ingestion**
 - verification: `npm run verify:learner-intelligence` and
   `npm run verify:learner-intelligence-integration`
 
-Roadmap Phase 2 later increments (weakness detection, spaced repetition,
-adaptive practice, personalized recommendations) remain not started.
+Roadmap Phase 2 later increments (spaced repetition, adaptive practice,
+personalized recommendations) remain not started. Deterministic topic progress,
+evidence bands, and assessment-based revision projections are implemented.
 
 ## Search & Knowledge Retrieval (implemented increment)
 
@@ -224,9 +240,9 @@ Implemented increment: **Phase 9E Mobile Foundation Integration Gate**
 - verification: `npm run verify:phase9`
 - notes: `docs/PHASE9.md`
 
-Phase 9 client foundation is closed. Next increment is not started. Do
-not add Android/iOS apps, authentication, or extra product APIs until
-that increment is designed.
+Phase 9 client foundation is closed, including Phase 9F reliability
+hardening. Native Android/iOS apps, authentication, and extra product APIs
+remain not started. V10.7 does not authorize those implementations.
 
 ## Phase 3 — AI Foundation
 
@@ -312,3 +328,86 @@ Progress means:
 **USER VALUE + TECHNICAL HEALTH + TRUST + ECONOMIC SUSTAINABILITY**
 
 not feature count.
+
+## Post-Phase-9F Product Increment — Canonical Geography Production Batch #1
+
+The first independently authored canonical Geography Water Cycle package is
+implemented through the universal content model, deterministic quality gate,
+version-bound production snapshot, and development-only Live Content Review
+Workspace. It remains in draft workflow state pending editorial and academic
+review; legacy Geography payload data is not migrated or modified.
+
+Editorial/academic remediation recorded `READY WITH WARNINGS`; the package is
+not published and remains pending human approval.
+
+Human editorial approval simulation recorded `APPROVE WITH NON-BLOCKING
+CONDITIONS`; Water Cycle remains draft and unpublished. Geography Canonical
+Batch #2, Latitude and Longitude, is implemented as a version-1 draft
+production package with review registration and no legacy payload dependency.
+It remains unpublished and is ready for a separate editorial/academic audit.
+
+The editorial/academic audit recorded `READY WITH WARNINGS` with zero blockers.
+Warnings are non-blocking improvements for source-locator specificity, optional
+spatial visualization, and bounded datum terminology. The package remains draft
+and unpublished pending human approval.
+
+A cross-batch canonical quality gate found the shared universal model,
+provenance, projections, learner/assessment boundaries, and review surface
+consistent across both packages. The standard is stable for Batch #3; source
+locator precision is a future recommendation. Batch #3, Atmosphere, is now
+implemented as a version-1 draft canonical production package with a valid
+quality snapshot and review registration. It remains unpublished and awaits
+editorial/academic audit; no Batch #4 work is included.
+
+Atmosphere's editorial and academic audit recorded `READY FOR PUBLICATION
+REVIEW` with zero blockers and two non-blocking warnings. It remains a
+version-1 draft, unpublished, and is not a publication transition.
+
+Human editorial approval simulation recorded `APPROVE WITH NON-BLOCKING
+CONDITIONS` for Atmosphere with zero blockers. Batch #4 readiness recommends
+Plate Tectonics as a bounded future topic; no Batch #4 production content has
+been implemented.
+
+Batch #4, Plate Tectonics, is now implemented as a fresh version-1 canonical
+production package with a valid version-bound quality snapshot and review
+route `/content-review/geography/plate-tectonics`. It remains `draft` and
+unpublished, has no legacy Geography dependency, and is ready for a separate
+editorial/academic audit. No Batch #5 content has been created.
+
+The project is resume-ready from the durable checkpoint at
+`docs/superpowers/reviews/2026-09-03-canonical-development-resume-checkpoint.md`;
+the next step is Plate Tectonics publication readiness / human editorial
+approval simulation.
+
+## V10.7 — Product, Brand & Platform Expansion (documentation architecture)
+
+V10.7 is the current architectural evolution. It does not replace Phase 0–9F
+history and does not convert future capabilities into current scope.
+
+Documented now:
+
+- Dual-brand surfaces: SAJIB ATLAS (global knowledge/creator ecosystem) and
+  SAJLAS by Sajib Atlas (flagship learning product)
+- Canonical layering: Core Platform → Product → Experience → Channel
+- Brand / deployment / engineering boundaries (related, not identical)
+- Reuse-before-parallel-engines governance
+- Conceptual business-expansion and Core Reuse Score decision aid
+- Global by design, localized by market; Bangladesh-first execution
+
+Not started by V10.7:
+
+- sajlas.com / sajibatlas.com deployment, DNS, or redirects
+- a second application or repository
+- Android/iOS applications
+- B2B Knowledge API, Assessment-as-a-Service, institutional tenancy
+- recruitment assessment, creator marketplace, publishing products
+- Batch #5 or any new canonical content
+- publication of existing draft packages
+
+NEXT architecture capabilities remain future development areas:
+stronger personalization, recommendation, richer revision intelligence,
+mobile application delivery, production content expansion, and additional
+market localization.
+
+Immediate path after this documentation evolution: resume canonical
+Geography production from the existing Plate Tectonics checkpoint.

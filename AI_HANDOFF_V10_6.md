@@ -1,5 +1,10 @@
 # SAJIB ATLAS — V10.6 AI HANDOFF
 
+This file is the historical V10.6 handoff document. The **active
+architecture baseline is V10.7**. V10.6 remains the historical engineering
+foundation. Do not treat this filename as proof that V10.6 is still the
+current architecture.
+
 ## READ FIRST
 
 This handoff is the entry point for any AI coding/development agent working
@@ -9,33 +14,40 @@ Read the documentation in this order:
 
 1. `AGENTS.md`
 2. `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
-3. `ARCHITECTURE.md`
-4. `CURRENT_STATE.md`
-5. `DEVELOPMENT_RULES.md`
-6. `ROADMAP.md`
-7. `SECURITY.md`
-8. `DOCUMENT_MAP.md`
-9. `README.md`
+3. `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
+4. `ARCHITECTURE.md`
+5. `CURRENT_STATE.md`
+6. `DEVELOPMENT_RULES.md`
+7. `ROADMAP.md`
+8. `SECURITY.md`
+9. `DOCUMENT_MAP.md`
+10. `README.md`
 
 Then inspect the repository itself.
 
 The repository/runtime/tests are the implementation source of truth.
 The Master Vision is the strategic North Star.
+V10.7 brand/product architecture is documentation only unless
+`CURRENT_STATE.md` confirms implementation.
 
 ---
 
 # 1. DOCUMENTATION BASELINE
 
-**Documentation Baseline: V10.6**
+**Active documentation baseline: V10.7**
+**Historical engineering foundation: V10.6**
+**Master Vision document: V10.6** (`SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`)
 
 All documents in the active documentation set must remain synchronized to
-V10.6 unless a deliberate version migration is being performed.
+V10.7. Preserve historical V10.6 phase notes, audits, reviews, and
+provenance. Do not globally replace historical V10.6 strings.
 
 Canonical set:
 
 ```text
 AGENTS.md
 SAJIB_ATLAS_Universal_Master_Vision_v10_6.md
+docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md
 ARCHITECTURE.md
 CURRENT_STATE.md
 DEVELOPMENT_RULES.md
@@ -549,7 +561,7 @@ Do NOT immediately generate large amounts of content or pages.
 First:
 
 1. audit the repository
-2. verify the V10.6 documentation chain
+2. verify the V10.7 documentation chain, preserving historical V10.6 records
 3. inspect package/tooling configuration
 4. determine the current application boundary
 5. read `CURRENT_STATE.md`
@@ -563,8 +575,10 @@ First:
 
 The objective is not to recreate an old application.
 
-The objective is to progressively build the platform described by V10.6 while
-preserving repository reality.
+The objective is to progressively build the platform described by the V10.6
+Master Vision and the V10.7 product/brand overlay while preserving
+repository reality. Do not implement V10.7 possibility-map products unless
+a later increment is explicitly designed.
 
 ---
 
@@ -657,4 +671,7 @@ security, or operational constraints justify it.
 >
 > **Scale only when evidence justifies scale.**
 
-**SAJIB ATLAS V10.6 — ONE PLATFORM, MANY EXPERIENCES, MANY MARKETS, MANY REVENUE STREAMS.**
+**SAJIB ATLAS V10.7 — ONE CORE PLATFORM, DUAL BRAND SURFACES, MANY EXPERIENCES, MANY MARKETS.**
+
+V10.6 remains the historical engineering foundation. SAJLAS by Sajib Atlas
+is the flagship learning product identity, not a second engineering stack.

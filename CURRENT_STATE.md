@@ -1,18 +1,21 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless this
+file and the repository confirm them.
 
-# CURRENT_STATE.md — V10.6 SYNCHRONIZED STATE
+# CURRENT_STATE.md — V10.7 SYNCHRONIZED STATE
 
 ## 1. Purpose
 
@@ -29,7 +32,7 @@ Working Web surfaces:
 - Home, Explore, About, Geography, BCS, English, International Affairs, Research
 - Geography category routes such as `/geography/physical-geography`
 - Geography topic study routes such as `/geography/earths-rotation`
-- `TopicStudyPage.tsx` + `MCQPractice.tsx` (client-side scoring via assessment core)
+- `TopicStudyPage.tsx` + `MCQPractice.tsx` (Assessment Engine sessions with local learner ingestion)
 - Client learner store (`localStorage`), `/dashboard`, `/revision`
 - Desktop substring search over the canonical content manifest
 
@@ -130,6 +133,14 @@ Topic study can mark the current Geography topic complete.
 - Completion is stored in the existing `localStorage` learner state as the
   canonical topic id. Duplicate id or legacy slug entries are ignored.
 - Completed state is shown on the study page. No streaks, badges, or points.
+- Study continuity is stored additively in optional `LearnerState.studyProgress`.
+  It records canonical topic id, content version, active/completed status,
+  topic-level progress, and last activity. It is independent from
+  `completedTopics` and assessment performance.
+- Published, available topic delivery is projected through
+  `src/lib/content/delivery.ts`; draft and archived content are not normal
+  learner delivery. A stored study record reports a deterministic stale-version
+  condition when the current topic version changes.
 
 `/dashboard` and `/revision` are linked from the primary navbar, footer, and
 the matching Quick Access items.
@@ -296,11 +307,15 @@ Do not treat DEFERRED or PLANNED items as implemented.
 
 ## 9. Current Development Priority
 
-The immediate product remains the Web implementation.
+The implemented client remains the Web application. V10.7 is documentation
+only and does not change that.
 
-Phase 0 foundation is closed. Phase 1A–1J through Phase 8B platform
-contracts are implemented. Authentication, payment processing, HTTP
-platform APIs, mobile clients, and persistence remain deferred.
+Phase 0–9F engineering is closed as recorded in later sections. Canonical
+Geography production is the immediate execution path. Next workflow step:
+Plate Tectonics publication readiness / human editorial approval
+simulation. Authentication, payment processing, native mobile clients, and
+persistence remain deferred. V10.7 brand domains, B2B/API products, and
+Batch #5 are not started.
 
 ## 10. Known Limitations
 
@@ -1177,3 +1192,150 @@ Audits 9A–9D. Does not add Android/iOS apps.
 - Notes: `docs/PHASE9.md`
 
 Next increment is not started.
+
+## 55. Phase 9F — Platform Contract Reliability & Client Resilience (implemented)
+
+The shared client boundary now hardens the existing Phase 1J/8B transport
+without adding routes or changing domain authorities.
+
+- Strict shared envelope parsing rejects malformed bodies, extra envelope
+  fields, and unsupported response versions.
+- Client requests generate opaque `platform-request/{opaque}` correlation IDs
+  unless an explicit valid ID is supplied.
+- Client transport has a bounded timeout (5 seconds by default).
+- Only GET reads retry, at most once, and only when execution fails
+  transiently. Mutations, malformed responses, and domain/access failures are
+  never retried.
+- The existing in-memory cache remains limited to safe public projections;
+  protected data, learner-private state, answer keys, AI output, secrets, and
+  credentials are rejected.
+- Code: `src/lib/client/` and `src/lib/platform/envelope.ts`
+- Verification: `npm run verify:phase9b`, `npm run verify:phase9c`,
+  `npm run verify:phase9`
+
+## 56. Assessment-to-Learner Web Loop Integration (implemented)
+
+Web MCQ practice now creates an in-memory Assessment Engine session, records
+responses, completes the session, and ingests the canonical `AssessmentResult`
+through Learner Intelligence. Existing `mcqResults` and `completedTopics`
+remain compatible local-first fields, while Dashboard and Revision continue to
+consume the existing learner projection.
+
+- Code: `src/components/assessment/MCQPractice.tsx`,
+  `src/store/learner/context.tsx`
+- Verification: assessment and learner-intelligence verifiers plus
+  `npm run verify:phase9`
+
+## 57. Learner Progress & Revision Intelligence (implemented)
+
+Canonical learner intelligence now exposes additive evidence bands and revision
+priorities on topic progress. Revision projections use canonical intelligence
+assessments for states with intelligence, with deterministic priority,
+last-activity, and topic-ID ordering. Legacy `mcqResults` remains a
+read-compatible fallback only for pre-intelligence state.
+
+- Code: `src/lib/learner-intelligence/`, `src/store/learner/revision.ts`,
+  `src/store/learner/intelligence.ts`, `src/components/learning/LearningSignals.tsx`
+- Verification: `npm run verify:learner-progress`
+
+## 58. Canonical Geography Production Batch #1 (implemented)
+
+The first independently authored canonical Geography package is available in
+the production workflow and Live Content Review Workspace:
+
+- Topic: Water Cycle (`topic/geography/water-cycle`), content version 1
+- Six process-based KnowledgeUnits, five concepts, four objectives, claims, and
+  authoritative source references
+- Automated quality evaluation creates a version-bound Production Quality
+  Snapshot; the record remains in `draft` for editorial and academic review
+- Review route: `/content-review/geography/water-cycle`
+- The package has no dependency on the legacy `src/lib/geography-data.ts`
+  payload, which remains reference-only
+- Verification: `npm run verify:content-review`
+
+The subsequent editorial/academic remediation gate recorded the package as
+`READY WITH WARNINGS`: no blockers remain, the human-influence claim has
+additional verified USGS provenance, and the package remains draft pending
+human editorial and academic approval. Audit report:
+`docs/superpowers/reviews/2026-09-03-water-cycle-editorial-academic-audit.md`.
+
+The human editorial approval simulation recorded
+`APPROVE WITH NON-BLOCKING CONDITIONS`; Water Cycle remains draft and
+`NOT PUBLISHED`. Geography Batch #2, Latitude and Longitude
+(`topic/geography/latitude-and-longitude`), is now an independently authored
+version-1 draft production package with five concepts, six KnowledgeUnits,
+five objectives, provenance, and reference-only assessment alignment. It is
+registered in the existing review workspace and remains unpublished pending
+editorial/academic audit. It has no dependency on the legacy
+`src/lib/geography-data.ts` payload.
+
+The editorial and academic audit recorded `READY WITH WARNINGS` with zero
+blockers. The retained warnings concern broad source locators, an optional
+future spatial diagram/example, and intentionally bounded datum terminology.
+Latitude and Longitude remains draft and unpublished pending human approval.
+
+A cross-batch canonical quality gate compared Water Cycle and Latitude and
+Longitude and found the universal standard stable for Batch #3. Recurring
+source-locator precision is a documented recommendation, not a blocker.
+Batch #3, Atmosphere (`topic/geography/atmosphere`), is now implemented as a
+fresh version-1 canonical production package with five concepts, seven
+KnowledgeUnits, five objectives, eight claims, five authoritative source
+references, and reference-only assessment alignment. Its production quality
+snapshot is valid and version-bound; the workflow lifecycle remains `draft`.
+It is registered at `/content-review/geography/atmosphere`, has no legacy
+Geography dependency, and is ready for a separate editorial/academic audit.
+It remains unpublished.
+
+Batch #3 Atmosphere has completed its editorial and academic audit with 22
+passes, two non-blocking warnings, and zero blockers. The audit verdict is
+`READY FOR PUBLICATION REVIEW`; the warnings record NOAA automated-fetch access
+restrictions and an optional future layer diagram or worked pressure example.
+The package remains a version-1 draft and unpublished.
+
+Human editorial approval simulation for Atmosphere recorded
+`APPROVE WITH NON-BLOCKING CONDITIONS`, with zero blockers and two documented
+conditions: retain the NOAA access limitation for later editorial recheck and
+consider an optional layer visual or worked pressure example in a future
+revision. Atmosphere remains draft and unpublished. Batch #4 readiness
+assessment recommends Plate Tectonics; no Batch #4 content has been created.
+
+Batch #4, Plate Tectonics (`topic/geography/plate-tectonics`), is now
+implemented as a fresh version-1 canonical production package with five
+concepts, seven KnowledgeUnits, five objectives, nine claims, five source
+references, and reference-only assessment alignment. It is registered at
+`/content-review/geography/plate-tectonics` with a valid version-bound quality
+snapshot and remains in lifecycle `draft`. The package has no dependency on
+the legacy `src/lib/geography-data.ts` payload and has not been published.
+It is ready for the separate editorial/academic audit; no Batch #5 content
+has been created.
+
+The durable resume checkpoint is recorded in
+`docs/superpowers/reviews/2026-09-03-canonical-development-resume-checkpoint.md`.
+The next exact workflow step remains Plate Tectonics publication readiness /
+human editorial approval simulation.
+
+## 59. V10.7 Product, Brand & Platform Expansion Architecture (documentation only)
+
+V10.7 is the current active architecture baseline. It is a documentation
+overlay. **Implementation is unchanged.**
+
+- Detailed specification:
+  `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
+- High-level summary: `ARCHITECTURE.md` section 14
+- Brand surfaces documented: SAJIB ATLAS (ecosystem/authority) and SAJLAS
+  by Sajib Atlas (flagship learning product)
+- Layering documented: Core Platform → Product → Experience → Channel
+- Bangladesh remains the launch/proving market. The architecture is global
+  by design and localized by market.
+- No second application, domain, DNS, redirect, repository split,
+  authentication system, database, mobile app, B2B/API product, or
+  canonical-content change was made for V10.7.
+- Future products (SAJLAS Assess, SAJLAS API, institutional, recruitment,
+  creator, publishing, independent ventures) remain options only.
+- Phase 0–9F implementation, Universal Content Schema, production packages,
+  audits, and publication-readiness decisions are unchanged.
+
+Immediate development path remains the existing canonical Geography
+checkpoint: Plate Tectonics publication readiness / human editorial
+approval simulation. Do not start Batch #5, publish draft content, migrate
+legacy Geography, or implement V10.7 brand domains.

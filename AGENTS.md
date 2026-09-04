@@ -2,34 +2,40 @@
 
 # This is NOT the Next.js you know
 
-This version has breaking changes ΓÇö APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
-This block is written and re-added by `next dev` ΓÇö verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 # ============================================
-# SAJIB ATLAS V10.6 — AI DEVELOPMENT RULES
+# SAJIB ATLAS V10.7 — AI DEVELOPMENT RULES
 # ============================================
 # SAJIB ATLAS — DOCUMENT CONTROL
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized
 Sajib Atlas is being developed as a reusable multi-platform knowledge,
 learning, assessment, AI, community, research, and commerce ecosystem.
+V10.7 documents a dual-brand overlay over one shared core:
+SAJIB ATLAS (ecosystem/authority) and SAJLAS by Sajib Atlas (flagship
+learning product). Brand separation does not require engineering
+duplication. V10.6 remains the historical engineering foundation.
 ## DOCUMENTATION AUTHORITY
 Read these documents before major implementation work:
 1. `AI_HANDOFF_V10_6.md`
 2. `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
-3. `ARCHITECTURE.md`
-4. `CURRENT_STATE.md`
-5. `DEVELOPMENT_RULES.md`
-6. `ROADMAP.md`
-7. `SECURITY.md`
-8. `DOCUMENT_MAP.md`
+3. `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
+4. `ARCHITECTURE.md`
+5. `CURRENT_STATE.md`
+6. `DEVELOPMENT_RULES.md`
+7. `ROADMAP.md`
+8. `SECURITY.md`
+9. `DOCUMENT_MAP.md`
 Repository/runtime/test evidence remains the implementation source of truth.
 The Master Vision is the strategic North Star, not evidence that a feature
-already exists.
+already exists. V10.7 brand/product architecture is documentation only
+unless `CURRENT_STATE.md` confirms an implementation.
 ## CORE ARCHITECTURE
 Preferred architecture:
 **MODULAR MONOLITH + API-READY DOMAIN BOUNDARIES + MOBILE-READY CONTRACTS**
@@ -54,6 +60,17 @@ Core domains:
 - growth
 - analytics
 Do not introduce microservices without demonstrated need.
+## PRODUCT / BRAND RULE
+V10.7 layering:
+**CORE PLATFORM → PRODUCT → EXPERIENCE → CHANNEL**
+SAJIB ATLAS and SAJLAS are brand/deployment surfaces, not duplicated
+platforms. Reuse core capabilities before creating parallel engines.
+Do not implement domains, redirects, a second app, B2B/API products, or
+mobile apps merely because they appear in the V10.7 possibility map.
+Bangladesh is the launch market. The architecture is global by design
+and localized by market. Do not treat South Asia as the ultimate scope.
+Do not alter the Universal Content Schema or canonical production workflow
+for brand reasons.
 ## MULTI-PLATFORM RULE
 Web, Android, and iOS are clients of one shared platform.
 Do not duplicate:

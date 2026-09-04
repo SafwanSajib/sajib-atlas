@@ -1,16 +1,22 @@
-# Sajib Atlas — V10.6 Architecture Baseline
+# Sajib Atlas — V10.7 Architecture Baseline
 
-> **Multi-Platform EdTech, AI, Community, Responsible Growth, Knowledge Commerce & Institutional Ecosystem**
+> **Global Knowledge & Creator Ecosystem. Flagship learning product: SAJLAS by Sajib Atlas.**
 
-Sajib Atlas is an AI-native, multi-platform knowledge and learning infrastructure designed to connect academic disciplines, competitive examinations, professional certifications, AI assistance, research, and resource commerce from a unified platform architecture.
+Sajib Atlas is a reusable knowledge and learning infrastructure. V10.7 documents a dual-brand overlay over one shared core: **SAJIB ATLAS** (global knowledge/creator/authority ecosystem) and **SAJLAS by Sajib Atlas** (flagship learning product). Bangladesh is the launch and proving market. The architecture is global by design and localized by market.
+
+The engineering system remains the V10.6 modular monolith with API-ready domain boundaries and mobile-ready contracts. V10.7 does not split the platform, deploy a second application, or claim that future products already exist.
 
 ---
 
-## 1. Architecture Baseline (V10.6)
+## 1. Architecture Baseline (V10.7)
 
-This repository is built and structured around the **V10.6 Architecture Baseline**.  
-The strategic North Star for all product evolution and design is:
+This repository's **active architecture baseline is V10.7**.
+V10.6 remains the historical engineering foundation (Phase 0–9F and canonical content architecture).
+The strategic North Star remains:
 `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+
+Authoritative V10.7 specification:
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
 
 ---
 
@@ -19,15 +25,25 @@ The strategic North Star for all product evolution and design is:
 Sajib Atlas follows a **Web-First → Mobile-Ready Platform** evolution path:
 1. **Web Foundation:** Robust Next.js learning and MCQ practice web application.
 2. **Platform Core & API Boundaries:** Reusable domain services, shared identity, and assessment models.
-3. **Android & iOS Clients:** Native mobile clients consuming the shared platform contracts. Phase 9A design: `docs/MOBILE.md`. No mobile app is implemented.
-4. **Institutional & B2B Expansion:** Enterprise and institutional tenancies.
+3. **Android & iOS Clients (future):** Native mobile clients consuming the shared platform contracts. Phase 9A design: `docs/MOBILE.md`. No mobile app is implemented.
+4. **Institutional & B2B Expansion (future):** Enterprise and institutional tenancies. Not implemented. V10.7 records them as FUTURE options only.
 
 ---
 
 ## 3. High-Level Platform Architecture
 
-The platform uses a **Modular Monolith + API-Ready Domain Boundaries + Mobile-Ready Contracts** pattern:
-- **Experience Layer:** Web, Android, iOS clients.
+The platform uses a **Modular Monolith + API-Ready Domain Boundaries + Mobile-Ready Contracts** pattern.
+
+V10.7 product layering (documentation overlay, not a second stack):
+
+```text
+CORE PLATFORM → PRODUCT → EXPERIENCE → CHANNEL
+```
+
+- **Core Platform:** reusable domain capabilities (content, assessment, learner intelligence, search, grounded AI, identity, entitlement, commerce foundations, platform contracts).
+- **Product:** market-facing business; initial flagship is SAJLAS by Sajib Atlas. Future product names are options only.
+- **Experience:** user-facing workflows such as Geography learning, practice assessment, revision, and dashboard.
+- **Channel:** delivery surface. Web is implemented. Android and iOS remain future clients of the same contracts (`docs/MOBILE.md`). No mobile app is implemented.
 - **Domain Layer:** Identity, knowledge, taxonomy, assessment, learning, progress, personalization, search, AI, commerce, entitlements, notifications, research, resources, creator, institution, community, growth, and analytics.
 - **Data & Infrastructure:** Server-authoritative data handling with secure isolation.
 
@@ -190,14 +206,17 @@ npm run verify:phase9
 
 ## 6. Documentation Map
 
-All active documentation is synchronized to the **V10.6** baseline:
-- `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md` — Strategic North Star & Master Vision
+All active documentation is synchronized to the **V10.7** baseline.
+V10.6 remains the historical engineering foundation and Master Vision document.
+
+- `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md` — V10.6 Strategic North Star (historical constitution)
+- `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md` — Authoritative V10.7 product/brand/platform specification
 - `AI_HANDOFF_V10_6.md` — Operational entry point and instructions for AI agents
-- `ARCHITECTURE.md` — Concrete platform domains and architecture boundaries
+- `ARCHITECTURE.md` — Concrete platform domains; section 14 is the V10.7 high-level summary
 - `CURRENT_STATE.md` — Actual repository reality (implemented vs. planned)
 - `DEVELOPMENT_RULES.md` — Engineering constraints and development discipline
 - `DOCUMENT_MAP.md` — Complete documentation graph and relationship guide
-- `ROADMAP.md` — Phased evolution from Web Foundation to Mobile & Enterprise
+- `ROADMAP.md` — Phased evolution; V10.7 is the current architectural overlay
 - `SECURITY.md` — Threat model, security boundaries, and data protection rules
 - `AGENTS.md` — AI development rules and Next.js / Sajib Atlas integration guidelines
 - `CLAUDE.md` — Clean AI entry point for Claude agents

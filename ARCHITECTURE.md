@@ -1,18 +1,28 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless
+`CURRENT_STATE.md` and the repository confirm them.
 
-# ARCHITECTURE.md — V10.6 PLATFORM ARCHITECTURE
+# ARCHITECTURE.md — V10.7 PLATFORM ARCHITECTURE
+
+V10.7 is a documentation overlay over the V10.6 engineering architecture.
+Sections 1–13 remain the V10.6 platform architecture and are still the
+engineering source of description. Section 14 is the canonical high-level
+V10.7 Product, Brand & Platform Expansion Architecture. The authoritative
+detailed specification is
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`.
 
 ## 1. Target Model
 
@@ -559,3 +569,115 @@ Extract services only when justified by:
 - security boundary
 - independent deployment needs
 - measurable operational benefit
+
+## 14. V10.7 Product, Brand & Platform Expansion Architecture
+
+Detailed specification:
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
+
+V10.7 does not change the implemented engineering system. It documents how
+the existing core can support more than one brand surface, product,
+experience, channel, and market without duplicating engines.
+
+### 14.1 Philosophy
+
+- **Start local. Build universal. Scale global.**
+- **Global by Design. Localized by Market.**
+
+Bangladesh is the initial proving ground and launch market, not the
+architectural boundary. South Asia may be an early expansion region, not
+the global boundary. Country, curriculum, examination, language, pricing,
+regulatory, and cultural requirements localize at the market/product layer.
+Core knowledge, assessment, learner intelligence, and platform capabilities
+remain universal wherever technically appropriate.
+
+### 14.2 Dual-brand ecosystem
+
+SAJIB ATLAS and SAJLAS are separate **brand/deployment surfaces**, not
+separate duplicated engineering platforms. SAJIB ATLAS is not described as
+a legally established parent company.
+
+| Brand | Logical domain | Role |
+|---|---|---|
+| **SAJIB ATLAS** | sajibatlas.com | Global Knowledge & Creator Ecosystem: trust, authority, research, public knowledge, editorial/publication, creator identity, media, SEO, product discovery |
+| **SAJLAS** | sajlas.com | Flagship global learning product: structured study, assessment, revision, Learner Intelligence, AI-assisted learning, future personalization, subscription/product experience |
+
+Naming lineage: `SAJIB ATLAS → SAJ + LAS → SAJLAS`.
+
+Preferred relationship: **SAJLAS by Sajib Atlas**.
+
+SAJLAS belongs to the SAJIB ATLAS ecosystem. It is not technically
+independent from the core platform. Launch is Bangladesh-first; expansion
+is through localization. SAJLAS must remain a focused learning product.
+
+### 14.3 Canonical layering
+
+```text
+CORE PLATFORM
+     ↓
+  PRODUCT
+     ↓
+ EXPERIENCE
+     ↓
+  CHANNEL
+```
+
+- **Core Platform:** reusable domain capabilities (content schema and
+  production, delivery, Assessment Engine, Learner Intelligence, Search,
+  grounded AI, identity, entitlement, commerce foundations, platform
+  contracts, client resilience).
+- **Product:** a market-facing business built on those capabilities.
+  Initial flagship: SAJLAS. Future names such as SAJLAS Assess or SAJLAS
+  API are options only.
+- **Experience:** a user-facing workflow (BCS learning, Geography
+  learning, practice assessment, revision, dashboard).
+- **Channel:** a delivery surface (Web now; Android/iOS/API/institutional
+  later). No native app is implemented.
+
+Intended model:
+
+```text
+One Core Knowledge Platform
+        ↓
+Multiple Product Surfaces
+        ↓
+Multiple Experiences
+        ↓
+Multiple Channels
+        ↓
+Potentially Multiple Markets
+```
+
+```text
+Brand separation does not require engineering duplication.
+```
+
+Brand boundary, deployment boundary, and engineering boundary are related
+and not identical. Logical domains such as `sajlas.com` or
+`api.sajlas.com` are architectural possibilities only. V10.7 does not
+configure DNS, redirects, a second application, separate auth, separate
+databases, or repository splits.
+
+### 14.4 Capability horizon
+
+- **NOW:** implemented V10.6 capabilities recorded in `CURRENT_STATE.md`.
+- **NEXT:** stronger personalization, recommendation, richer revision
+  intelligence, mobile application delivery, production content expansion,
+  additional market localization. Not started as V10.7 implementation.
+- **FUTURE:** B2B Knowledge API, Assessment-as-a-Service, institutional
+  learning, recruitment assessment, creator ecosystem, publishing, and
+  independent ventures. Possibility map only.
+
+Governance rule: **REUSE CORE CAPABILITIES BEFORE CREATING PARALLEL
+ENGINES.** Prefer existing capability → adapter/experience → new core
+capability only when the current abstraction cannot satisfy the domain.
+
+### 14.5 Content and production protection
+
+V10.7 does not alter the Universal Content Schema, editorial/provenance
+specification, canonical production pipeline, quality gate, Live Content
+Review architecture, or Geography production workflow. Legacy
+`geography-data.ts` remains LEGACY / REFERENCE ONLY. Current canonical
+packages remain draft and unpublished. The next production step remains
+Plate Tectonics publication readiness / human editorial approval
+simulation.
