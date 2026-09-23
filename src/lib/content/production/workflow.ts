@@ -101,8 +101,24 @@ function hasPassedReview(record: ProductionRecord, type: ProductionReviewType): 
   return record.reviews.some((review) => review.type === type && review.outcome === "passed");
 }
 
+function snapshotMatchesIdentity(record: ProductionRecord): boolean {
+  const snapshot = record.qualitySnapshot;
+  if (!snapshot) return false;
+  return snapshot.contentId === record.content.topic.id
+    && snapshot.contentVersion === record.content.topic.contentVersion
+    && snapshot.report.contentId === snapshot.contentId
+    && snapshot.report.contentVersion === snapshot.contentVersion;
+}
+
+function rejectMismatchedSnapshot(record: ProductionRecord): void {
+  if (record.qualitySnapshot && !snapshotMatchesIdentity(record)) {
+    fail("quality snapshot does not match content identity");
+  }
+}
+
 export function approveProduction(record: ProductionRecord): ProductionRecord {
   if (record.workflowState !== "review") fail("only review content can be approved");
+  rejectMismatchedSnapshot(record);
   const evaluated = record.qualitySnapshot ? record : evaluateProductionQuality(record);
   if (evaluated.qualitySnapshot?.report.overall === "blocked") fail("quality blockers prevent approval");
   if (!hasPassedReview(evaluated, "editorial") || !hasPassedReview(evaluated, "academic-source")) {
@@ -114,6 +130,7 @@ export function approveProduction(record: ProductionRecord): ProductionRecord {
 export function publishProduction(record: ProductionRecord, publishedAt: string): ProductionRecord {
   if (record.workflowState !== "approved") fail("only approved content can be published");
   if (!publishedAt.trim()) fail("publication timestamp is required");
+  rejectMismatchedSnapshot(record);
   const evaluated = record.qualitySnapshot ? record : evaluateProductionQuality(record);
   if (evaluated.qualitySnapshot?.report.overall === "blocked") fail("quality blockers prevent publication");
   return {
@@ -145,6 +162,10 @@ export function createProductionCorrection(
     ...createProductionDraft(correctedContent),
     supersedesVersion: published.content.topic.contentVersion,
   };
+}
+
+export function projectProductionDelivery(record: ProductionRecord): ProductionRecord | undefined {
+  return isProductionDeliveryEligible(record) ? record : undefined;
 }
 
 export function isProductionDeliveryEligible(record: ProductionRecord): boolean {

@@ -1409,7 +1409,9 @@ The authoritative V10.7 architecture remains `docs/superpowers/specs/2026-09-04-
 
 Quality, editorial status, batch item state, and canonical publication remain four separate axes.
 
-The legacy Geography payload in `src/lib/geography-data.ts` remains legacy reference for the current study surface. It is not the universal content-quality standard. New canonical Geography batches are separate production packages. They have not all been migrated, and they are not published by this workspace.
+A cloned Water Cycle `ProductionRecord` can be submitted, given passed editorial and academic-source review rows, approved, and published inside `npm run verify:content-production`. `projectProductionDelivery` returns that published clone only. The registry record from `getReviewRecords` stays `draft`. `registeredInContentReview` stays `false`. The Editorial CMS still does not call `approveProduction` or `publishProduction`. `/geography/[topic]` still reads `src/lib/geography-data.ts`.
+
+The legacy Geography payload in `src/lib/geography-data.ts` remains legacy reference for the current study surface. It is not the universal content-quality standard. New canonical Geography batches are separate production packages. They have not all been migrated, and this publication proof does not publish them on the public route.
 
 ### ARCHITECTURE-ONLY
 
@@ -1438,7 +1440,8 @@ Lint still fails only on three pre-existing findings, which this work does not c
 
 ### NOT YET IMPLEMENTED
 
-- Canonical approval and publication of Studio or editorial drafts.
+- Publishing the live review registry or the public Geography route. The publication proof uses a discarded clone.
+- Automatic publication from the batch worker or the Editorial CMS.
 - Supabase, a new database, authentication, RBAC, and commerce processing.
 - Geography Batch #5, publication of the existing draft packages, and migration of legacy `src/lib/geography-data.ts`.
 - Push or merge. This work is local on `feature/editorial-cms-workspace` in `sajib-atlas-editorial-cms`. The original `feature/content-production-studio` workspace is separate.

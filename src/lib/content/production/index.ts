@@ -7,6 +7,7 @@ export {
   evaluateProductionQuality,
   isProductionAiEligible,
   isProductionDeliveryEligible,
+  projectProductionDelivery,
   publishProduction,
   recordProductionReview,
   submitProductionForReview,
