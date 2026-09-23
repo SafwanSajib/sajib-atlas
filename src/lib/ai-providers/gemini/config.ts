@@ -30,6 +30,10 @@ function parsePositiveInt(value: string | undefined, fallback: number, label: st
   return aiSuccess(parsed);
 }
 
+export function resolveGeminiModel(env: EnvLike): string {
+  return env.GEMINI_MODEL?.trim() || GEMINI_DEFAULT_MODEL;
+}
+
 export function readGeminiProviderConfig(env: EnvLike): AiIntelligenceResult<GeminiProviderConfig> {
   if (env.NEXT_PUBLIC_GEMINI_API_KEY !== undefined && env.NEXT_PUBLIC_GEMINI_API_KEY !== "") {
     return aiFailure("invalid_request", "provider credentials must not use NEXT_PUBLIC_ variables");
@@ -46,7 +50,7 @@ export function readGeminiProviderConfig(env: EnvLike): AiIntelligenceResult<Gem
     "GEMINI_MAX_OUTPUT_TOKENS",
   );
   if (!maxTokens.ok) return maxTokens;
-  const model = env.GEMINI_MODEL?.trim() || GEMINI_DEFAULT_MODEL;
+  const model = resolveGeminiModel(env);
   const baseUrl = env.GEMINI_BASE_URL?.trim() || GEMINI_DEFAULT_BASE_URL;
   return aiSuccess({
     apiKey: apiKey.trim(),

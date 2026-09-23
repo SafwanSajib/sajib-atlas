@@ -23,7 +23,10 @@ engineering phase, domain deployment, or product implementation.
 
 Historical Phase 0–9F progression below remains the V10.6 engineering
 roadmap and is preserved as history plus still-valid later vision phases.
-Immediate execution remains canonical Geography production.
+Immediate canonical Geography publication readiness remains a separate
+content checkpoint. Content Studio and the Editorial CMS, recorded in
+`CURRENT_STATE.md`, are authoring tools. They do not publish and they do
+not replace this roadmap.
 
 Detailed V10.7 specification:
 `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`

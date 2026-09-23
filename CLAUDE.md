@@ -15,8 +15,11 @@ Before implementation, read:
 The active architecture baseline is **V10.7**.
 V10.6 remains the historical engineering foundation (Phase 0–9F and
 canonical content architecture). The Master Vision document remains V10.6.
-V10.7 is documentation-only Product, Brand & Platform Expansion Architecture.
-It does not change implementation.
+V10.7 brand and product expansion is documentation only unless
+`CURRENT_STATE.md` says otherwise. The authoritative specification is
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`.
+Content Studio, the batch engine, and the Editorial CMS are implemented
+authoring tools. They do not approve or publish.
 The platform direction is:
 **WEB → MOBILE-READY CORE → ANDROID → iOS → INSTITUTIONAL / B2B**
 Preferred foundation:

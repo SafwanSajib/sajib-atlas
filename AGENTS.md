@@ -35,7 +35,9 @@ Read these documents before major implementation work:
 Repository/runtime/test evidence remains the implementation source of truth.
 The Master Vision is the strategic North Star, not evidence that a feature
 already exists. V10.7 brand/product architecture is documentation only
-unless `CURRENT_STATE.md` confirms an implementation.
+unless `CURRENT_STATE.md` confirms an implementation. The authoritative
+V10.7 specification is
+`docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`.
 ## CORE ARCHITECTURE
 Preferred architecture:
 **MODULAR MONOLITH + API-READY DOMAIN BOUNDARIES + MOBILE-READY CONTRACTS**

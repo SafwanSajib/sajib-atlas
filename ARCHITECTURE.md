@@ -23,6 +23,8 @@ engineering source of description. Section 14 is the canonical high-level
 V10.7 Product, Brand & Platform Expansion Architecture. The authoritative
 detailed specification is
 `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`.
+Content Studio and the Editorial CMS are later authoring tools recorded in
+`CURRENT_STATE.md`. They do not replace section 14.
 
 ## 1. Target Model
 
@@ -575,9 +577,12 @@ Extract services only when justified by:
 Detailed specification:
 `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
 
-V10.7 does not change the implemented engineering system. It documents how
-the existing core can support more than one brand surface, product,
-experience, channel, and market without duplicating engines.
+V10.7 does not change the implemented engineering system described in
+sections 1–13. It documents how the existing core can support more than one
+brand surface, product, experience, channel, and market without duplicating
+engines. Content Studio, the batch engine, and the Editorial CMS are
+implemented authoring tools recorded in `CURRENT_STATE.md`. They do not
+publish, and they do not change this brand architecture.
 
 ### 14.1 Philosophy
 

@@ -307,8 +307,10 @@ Do not treat DEFERRED or PLANNED items as implemented.
 
 ## 9. Current Development Priority
 
-The implemented client remains the Web application. V10.7 is documentation
-only and does not change that.
+The implemented client remains the Web application. V10.7 brand domains
+are documentation only. Content Studio, the persistent batch engine, and
+the Editorial CMS are implemented development-only authoring tools and do
+not replace the Web client.
 
 Phase 0–9F engineering is closed as recorded in later sections. Canonical
 Geography production is the immediate execution path. Next workflow step:
@@ -1316,10 +1318,12 @@ human editorial approval simulation.
 
 ## 59. V10.7 Product, Brand & Platform Expansion Architecture (documentation only)
 
-V10.7 is the current active architecture baseline. It is a documentation
-overlay. **Implementation is unchanged.**
+V10.7 is the current active architecture baseline. The brand, product, and
+channel expansion remains a documentation overlay. **Brand implementation
+is unchanged.** Content production and the Editorial CMS, recorded below,
+are separate implemented authoring tools. They are not brand domains.
 
-- Detailed specification:
+- Authoritative V10.7 specification:
   `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
 - High-level summary: `ARCHITECTURE.md` section 14
 - Brand surfaces documented: SAJIB ATLAS (ecosystem/authority) and SAJLAS
@@ -1339,3 +1343,104 @@ Immediate development path remains the existing canonical Geography
 checkpoint: Plate Tectonics publication readiness / human editorial
 approval simulation. Do not start Batch #5, publish draft content, migrate
 legacy Geography, or implement V10.7 brand domains.
+
+## 60. Studio Batch Production Engine (local-first, not publication)
+
+The Content Studio in-request batch (`generateStudioBatchAction` /
+`runStudioBatch`) is unchanged. It still runs every item inside one server
+action and keeps results in page memory.
+
+A separate batch production engine lives in `src/lib/content-studio/batch-engine/`.
+It is an authoring orchestrator, not a publisher:
+
+- A batch job and its items are persisted through a `BatchJobStore`
+  (memory, or one local JSON file per batch). Creating or queueing a batch
+  does not generate topics.
+- `tickBatchWorker` runs exactly one eligible item per call through the
+  existing `runStudioPipeline`. It is not a daemon. Browser `localStorage`
+  is not a worker. Nothing continues after the calling process stops.
+- Resume skips succeeded and quality-blocked items. `source_insufficient`
+  stays blocked until its source text is replaced. `rate_limited` gets one
+  automatic batch retry, separate from the Gemini adapter's own single retry.
+- Results land in a Studio Production Inbox. An explicit handoff records that
+  a human may later register the draft canonically. The handoff does not
+  write `/content-review`, approve, or publish.
+- Verification: `npm run verify:batch-engine`.
+
+The Studio page now has an operator control surface for that engine. It can create a persistent batch, queue it, tick one item, pause, resume, and show the production inbox. The tick is explicit. It is not a background worker. The older synchronous batch on the same page is unchanged. A 3-topic live gate can describe Water Cycle, Atmosphere, and Plate Tectonics from the existing canonical packages, but it does not start a provider call.
+Verification: `npm run verify:batch-control`.
+
+A failed item can be explicitly requeued with `recoverFailedBatchItem`. That operation does not call a provider. The next tick runs that item once. Succeeded, quality-blocked, and source-insufficient items are not requeued. `rate_limited` keeps its existing one-retry policy. Verification: `npm run verify:batch-recovery`.
+
+No bulk live generation has been run. Canonical Geography packages are unchanged.
+
+The development-only Editorial CMS Workspace edits a batch item's existing draft through `/content-studio/editor/[batchId]/[itemId]`. It stops at editorial status `ready_for_approval`. It does not approve, publish, or register canonical review. Verification: `npm run verify:editorial-workspace`.
+
+## 61. Editorial CMS and current V10.7 state
+
+Status words used here:
+
+- **IMPLEMENTED** — present in this worktree and covered by a verifier or by the production build.
+- **ARCHITECTURE-ONLY** — specified, not a runtime product.
+- **DEFERRED** — known, non-blocking, and intentionally unchanged.
+- **NOT YET IMPLEMENTED** — absent. Do not treat it as present.
+
+### IMPLEMENTED
+
+The authoritative V10.7 architecture remains `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`. The items below are authoring implementation. They are not a second architecture, and they are not canonical publication.
+
+- Content Production Studio: Studio form, server generation action, server-routed provider, identity resolution, structured parsing, and a `ProductionRecord` draft.
+- Source packet and provenance grounding. The pipeline does not invent sources. Provider traces are sanitized. Raw provider bodies and secrets are not stored.
+- Content Quality Gate integration through `evaluateProductionQuality`, then review projection. The editor displays that snapshot. It does not reimplement the gate.
+- Persistent Batch Production Engine: batch definition, local JSON persistence, deterministic queue, and `tickBatchWorker` processing one item through the existing Studio pipeline.
+- Failure isolation. Succeeded, quality-blocked, and source-insufficient items are not auto-regenerated. A failed item can be explicitly requeued without calling the provider.
+- Rate-limit handling: one automatic batch retry, separate from the Gemini adapter's single transient HTTP retry.
+- Crash recovery: a still-running item may be reclaimed once. A second observation past that limit marks it failed and does not call the provider again for that reclaim.
+- Production Inbox lanes, including `generated`. `generated` is not an editorial status. Handoff does not register `/content-review`.
+- Batch Control Surface: create, queue, tick one item, pause, resume, recover, and show the inbox. The tick is operator-triggered.
+- Editorial CMS Workspace at `/content-studio/editor/[batchId]/[itemId]`, with header, content editor, provenance, quality, notes, and history panels.
+- Editorial workflow only: `needs_editing`, `ready_for_review`, `changes_requested`, and `ready_for_approval`. This is an authoring workflow. It is not the canonical publication system.
+- Compare-and-swap revision save. A stale revision is rejected and is not written.
+- Write-through copies the editorial production onto the batch draft only. Replay repairs an unequal copy through `replayEditorialWriteThrough` and does not merge or delete.
+- Persistence-failure state: neither draft body is rendered. A corrupt editorial file stays in place, and replay is withheld when that record cannot be read. Missing batch, invalid parameters, and production mode use `notFound()`.
+- Opening a draft with no editorial file returns in-memory `needs_editing` at revision 0 and does not write a file or change canonical content.
+- Browser verification of `/content-studio`, `/content-review`, a valid editor route, a missing batch, and an invalid parameter. Approve and Publish were disabled. The editor did not present the draft as published.
+- Verification: `verify:editorial-workspace`, `verify:content-studio`, `verify:batch-engine`, `verify:batch-control`, `verify:batch-recovery`, `verify:content-review`, `verify:content-quality`, `verify:content-production`, `tsc --noEmit`, `diff:check`, and `npm run build`.
+
+Quality, editorial status, batch item state, and canonical publication remain four separate axes.
+
+The legacy Geography payload in `src/lib/geography-data.ts` remains legacy reference for the current study surface. It is not the universal content-quality standard. New canonical Geography batches are separate production packages. They have not all been migrated, and they are not published by this workspace.
+
+### ARCHITECTURE-ONLY
+
+- SAJIB ATLAS / SAJLAS brand surfaces, domains, and a separate SAJLAS application.
+- The V10.7 possibility map: SAJLAS Assess, SAJLAS API, institutional, recruitment, creator, publishing, and independent ventures.
+- Native Android and iOS applications. Mobile-ready contracts exist. The apps do not.
+- A future database or cloud worker behind the same batch and editorial contracts.
+
+### DEFERRED
+
+These editorial observations were left unchanged on purpose:
+
+- `file-store.ts` `list()` parses JSON outside the `load()` failure path.
+- The memory editorial store does not enforce the byte cap. The file store does.
+- `updateBatchItemDraft` reports `stale content version` when `completedAt` differs, while one spec sentence names that reload refusal `persistence failure`. Commit and replay still fail closed.
+- Approve and Publish keep those labels. The not-available sentence is beside the disabled buttons.
+- The quality panel prints `FAIL` next to a blocked report's raw value.
+- The header does not use the exact phrase `NOT PUBLICLY DELIVERABLE`.
+- A block payload text edit is sent only when the existing `payload.text` is a string.
+
+Lint still fails only on three pre-existing findings, which this work does not change:
+
+- `src/components/content-studio/StudioForm.tsx` — `react-hooks/set-state-in-effect`
+- `src/lib/content-studio/source-packet.ts` — unused `_identity`
+- `src/lib/geography-data.ts` — unused `banglaSummaries`
+
+### NOT YET IMPLEMENTED
+
+- Canonical approval and publication of Studio or editorial drafts.
+- Supabase, a new database, authentication, RBAC, and commerce processing.
+- Geography Batch #5, publication of the existing draft packages, and migration of legacy `src/lib/geography-data.ts`.
+- Push or merge. This work is local on `feature/editorial-cms-workspace` in `sajib-atlas-editorial-cms`. The original `feature/content-production-studio` workspace is separate.
+
+Canonical Geography packages, the review registry, the Quality Gate, the production workflow, assessment, learner state, and search were not modified by the Editorial CMS.

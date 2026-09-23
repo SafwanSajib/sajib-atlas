@@ -41,7 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
+# local batch-engine state (not a database)
+/.data/
 
 # Next.js generated prerender metadata
 prerender.txt

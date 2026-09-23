@@ -54,8 +54,10 @@ export function createXaiAiProvider(
     async complete(input) {
       const system = input.instructions?.system ?? "Answer using only supplied canonical context.";
       const user = input.instructions?.user ?? input.request.input.text;
+      const timeoutMs = input.limits?.timeoutMs ?? config.timeoutMs;
+      const maxOutputTokens = input.limits?.maxOutputTokens ?? config.maxOutputTokens;
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), config.timeoutMs);
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
       try {
         const response = await fetchFn(`${config.baseUrl}/chat/completions`, {
           method: "POST",
@@ -65,7 +67,7 @@ export function createXaiAiProvider(
           },
           body: JSON.stringify({
             model: config.model,
-            max_tokens: config.maxOutputTokens,
+            max_tokens: maxOutputTokens,
             messages: [
               { role: "system", content: system },
               { role: "user", content: user },

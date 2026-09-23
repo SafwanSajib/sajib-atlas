@@ -39,7 +39,8 @@ Product, brand, and platform expansion claims are not implemented unless
 
 V10.7 brand/product layering is authoritative for brand surfaces, product
 layering, and expansion governance. It does not replace canonical content
-architecture or V10.6 phase history.
+architecture or V10.6 phase history. Implementation that follows it is
+recorded in `CURRENT_STATE.md`.
 
 ## Files
 
@@ -49,7 +50,9 @@ Historical North Star. Not rewritten by V10.7.
 
 ### `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
 Authoritative detailed V10.7 Product, Brand & Platform Expansion
-Architecture. Documentation only. Does not change implementation.
+Architecture. Documentation only. Does not change the strategic architecture.
+Later Content Studio and Editorial CMS implementation is recorded in
+`CURRENT_STATE.md`.
 
 ### `AGENTS.md`
 Instructions for AI/software agents working in the repository. Active
@@ -68,7 +71,9 @@ are the V10.6 engineering architecture. Section 14 is the canonical
 high-level V10.7 summary and points to the detailed specification.
 
 ### `CURRENT_STATE.md`
-What is actually implemented now. V10.7 is recorded as documentation-only.
+What is actually implemented now. V10.7 brand expansion is documentation-only.
+Content Studio, the batch engine, and the Editorial CMS are implemented
+authoring tools, not publication.
 
 ### `DEVELOPMENT_RULES.md`
 Engineering constraints and implementation discipline.
@@ -216,9 +221,10 @@ Phase 9A mobile client architecture lives in `docs/MOBILE.md`. Phase 9B
 shared client adapter lives in `src/lib/client/`. Phase 9C is the
 client state/offline boundary. Phase 9D is the Web integration gate.
 Phase 9E is the integration gate (`docs/PHASE9.md`, `npm run verify:phase9`).
-Phase 9F hardens client/envelope resilience. Canonical Geography production
-is the current content workflow. V10.7 does not start a new engineering
-increment.
+Phase 9F hardens client/envelope resilience. Canonical Geography publication
+readiness remains a content checkpoint. V10.7 brand expansion does not start
+a new product increment. Content Studio and the Editorial CMS are authoring
+tools recorded in `CURRENT_STATE.md`, not a new public phase.
 
 ### Canonical content architecture (authoritative; unchanged by V10.7)
 
@@ -247,7 +253,9 @@ Distinguish three layers:
 1. **Historical V10.6 foundation** — Phase 0–9F engineering, Master Vision
    document, phase notes, audits, reviews, and provenance records.
 2. **Current V10.7 active architecture** — Product, Brand & Platform
-   Expansion overlay in this documentation set.
+   Expansion specification. Content Studio and the Editorial CMS are
+   implemented authoring tools recorded in `CURRENT_STATE.md`. They do
+   not replace that specification.
 3. **Future roadmap concepts** — NEXT/FUTURE capabilities that are not
    implemented.
 

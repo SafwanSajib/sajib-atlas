@@ -10,6 +10,8 @@
 
 This document is the authoritative detailed specification for Sajib Atlas V10.7. `ARCHITECTURE.md` carries the canonical high-level summary and points here. It does not replace the Universal Content Schema, editorial/provenance rules, canonical production pipeline, quality gate, Live Content Review architecture, or the current Geography production workflow.
 
+Content Studio, the persistent batch engine, and the Editorial CMS are later authoring implementation recorded in `CURRENT_STATE.md`. They do not change the strategic architecture in this document, and they do not approve or publish content.
+
 ---
 
 ## 1. Purpose and non-goals

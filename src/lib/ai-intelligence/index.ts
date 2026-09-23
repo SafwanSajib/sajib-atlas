@@ -23,7 +23,7 @@ export {
   retrieveAiKnowledgeReferences,
 } from "./context";
 export { aiFailure, aiSuccess } from "./errors";
-export type { AiProvider, AiProviderInput, AiProviderInstructions, AiProviderOutput } from "./provider";
+export type { AiProvider, AiProviderGenerationLimits, AiProviderInput, AiProviderInstructions, AiProviderOutput } from "./provider";
 export { createAiRequest, responseIdForRequest } from "./request";
 export { createAiResponse } from "./response";
 export { createLexicalKnowledgeRetriever, lexicalKnowledgeRetriever } from "./retrieve";

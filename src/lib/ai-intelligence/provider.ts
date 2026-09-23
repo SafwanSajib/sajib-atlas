@@ -13,9 +13,16 @@ export type AiProviderInstructions = {
   user: string;
 };
 
+export type AiProviderGenerationLimits = {
+  maxOutputTokens?: number;
+  timeoutMs?: number;
+};
+
 export type AiProviderInput = {
   request: AiRequest;
   instructions?: AiProviderInstructions;
+  /** Optional per-call budget. Ask/grounded paths omit this and keep adapter defaults. */
+  limits?: AiProviderGenerationLimits;
 };
 
 export type AiProviderOutput = {
