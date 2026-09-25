@@ -6,6 +6,7 @@
 export { createGeminiAiProvider, type GeminiFetch } from "./adapter";
 export {
   readGeminiProviderConfig,
+  resolveGeminiModel,
   GEMINI_DEFAULT_BASE_URL,
   GEMINI_DEFAULT_MAX_OUTPUT_TOKENS,
   GEMINI_DEFAULT_MODEL,

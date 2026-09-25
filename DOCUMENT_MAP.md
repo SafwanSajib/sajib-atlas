@@ -1,23 +1,29 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless
+`CURRENT_STATE.md` and the repository confirm them.
 
-# DOCUMENT_MAP.md — V10.6 DOCUMENTATION GRAPH
+# DOCUMENT_MAP.md — V10.7 DOCUMENTATION GRAPH
 
 ## Authority Graph
 
 ```text
                     MASTER VISION V10.6
+                           │
+                    V10.7 PRODUCT / BRAND /
+                    PLATFORM EXPANSION SPEC
                            │
         ┌──────────────────┼───────────────────┐
         │                  │                   │
@@ -31,28 +37,54 @@ versions.
         └──────────── DOCUMENT MAP
 ```
 
+V10.7 brand/product layering is authoritative for brand surfaces, product
+layering, and expansion governance. It does not replace canonical content
+architecture or V10.6 phase history. Implementation that follows it is
+recorded in `CURRENT_STATE.md`.
+
 ## Files
 
 ### `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
-Strategic destination and constitutional product/business architecture.
+V10.6 strategic destination and constitutional product/business architecture.
+Historical North Star. Not rewritten by V10.7.
+
+### `docs/superpowers/specs/2026-09-04-v10-7-product-brand-platform-expansion-architecture.md`
+Authoritative detailed V10.7 Product, Brand & Platform Expansion
+Architecture. Documentation only. Does not change the strategic architecture.
+Later Content Studio and Editorial CMS implementation is recorded in
+`CURRENT_STATE.md`.
 
 ### `AGENTS.md`
-Instructions for AI/software agents working in the repository.
+Instructions for AI/software agents working in the repository. Active
+baseline is V10.7.
+
+### `AI_HANDOFF_V10_6.md`
+Historical V10.6-named handoff file. Active baseline inside the file is
+V10.7. Do not treat the filename as the current architecture version.
+
+### `CLAUDE.md`
+Claude entry point. Active baseline is V10.7.
 
 ### `ARCHITECTURE.md`
-Concrete architectural boundaries and domain relationships.
+Concrete architectural boundaries and domain relationships. Sections 1–13
+are the V10.6 engineering architecture. Section 14 is the canonical
+high-level V10.7 summary and points to the detailed specification.
 
 ### `CURRENT_STATE.md`
-What is actually implemented now.
+What is actually implemented now. V10.7 brand expansion is documentation-only.
+Content Studio, the batch engine, and the Editorial CMS are implemented
+authoring tools, not publication.
 
 ### `DEVELOPMENT_RULES.md`
 Engineering constraints and implementation discipline.
 
 ### `ROADMAP.md`
-Prioritized evolution sequence.
+Prioritized evolution sequence. V10.7 is the current architectural
+evolution; Phase 0–9F and later vision phases remain historical or future.
 
 ### `SECURITY.md`
 Security, privacy, AI safety, abuse prevention, and commercial integrity.
+V10.7 does not change the security architecture.
 
 ### `DOCUMENT_MAP.md`
 Relationship and authority map for the documentation set.
@@ -189,16 +221,51 @@ Phase 9A mobile client architecture lives in `docs/MOBILE.md`. Phase 9B
 shared client adapter lives in `src/lib/client/`. Phase 9C is the
 client state/offline boundary. Phase 9D is the Web integration gate.
 Phase 9E is the integration gate (`docs/PHASE9.md`, `npm run verify:phase9`).
-Next increment is not started.
+Phase 9F hardens client/envelope resilience. Canonical Geography publication
+readiness remains a content checkpoint. V10.7 brand expansion does not start
+a new product increment. Content Studio and the Editorial CMS are authoring
+tools recorded in `CURRENT_STATE.md`, not a new public phase.
+
+### Canonical content architecture (authoritative; unchanged by V10.7)
+
+These remain the content-architecture authorities. Brand/product strategy
+does not replace them.
+
+- `docs/superpowers/specs/2026-09-03-universal-content-schema-design.md`
+- `docs/superpowers/specs/2026-09-03-editorial-source-provenance-spec.md`
+- `docs/superpowers/specs/2026-09-03-canonical-content-production-pipeline.md`
+- `docs/superpowers/specs/2026-09-03-automated-content-quality-gate.md`
+- `docs/superpowers/specs/2026-09-03-live-canonical-content-review-architecture.md`
+- `docs/superpowers/reviews/2026-09-03-canonical-development-resume-checkpoint.md`
+
+Phase notes under `docs/PHASE7.md`, `docs/PHASE8.md`, `docs/PHASE9.md`,
+`docs/IDENTITY.md`, `docs/ENTITLEMENT.md`, `docs/COMMERCE.md`,
+`docs/PLATFORM.md`, `docs/MOBILE.md`, and `docs/TOPIC_ENGINE.md` remain
+V10.6 historical implementation records. Do not rewrite them merely to
+display a newer version number.
 
 ## Version Rule
 
-All files in this set are **V10.6**.
+The **active architecture baseline is V10.7**.
 
-If the Master Vision changes version:
+Distinguish three layers:
 
-1. update the Master Vision
-2. update document-control headers
+1. **Historical V10.6 foundation** — Phase 0–9F engineering, Master Vision
+   document, phase notes, audits, reviews, and provenance records.
+2. **Current V10.7 active architecture** — Product, Brand & Platform
+   Expansion specification. Content Studio and the Editorial CMS are
+   implemented authoring tools recorded in `CURRENT_STATE.md`. They do
+   not replace that specification.
+3. **Future roadmap concepts** — NEXT/FUTURE capabilities that are not
+   implemented.
+
+Do not globally replace historical "V10.6" strings. Do not fabricate a
+V10.7 implementation history.
+
+If the active architecture version changes again:
+
+1. preserve historical records
+2. update active document-control headers
 3. review architecture
 4. review current state
 5. review roadmap
@@ -206,7 +273,7 @@ If the Master Vision changes version:
 7. review agents/rules
 8. update this map
 
-No document may silently claim a different architecture baseline.
+No active document may silently claim a different architecture baseline.
 
 ## Conflict Rule
 

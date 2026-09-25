@@ -32,8 +32,34 @@ export const FALLBACK_ELIGIBLE_CATEGORIES = [
 ] as const;
 export type FallbackEligibleCategory = (typeof FALLBACK_ELIGIBLE_CATEGORIES)[number];
 
+export const AI_PROVIDER_FINISH_REASONS = [
+  "STOP",
+  "MAX_TOKENS",
+  "SAFETY",
+  "PROHIBITED_CONTENT",
+  "BLOCKLIST",
+  "RECITATION",
+  "OTHER",
+] as const;
+export type AiProviderFinishReason = (typeof AI_PROVIDER_FINISH_REASONS)[number];
+
+export type AiProviderAttemptRecord = {
+  attempt: number;
+  outcome: "success" | AiProviderFailureCategory;
+  status?: number;
+  finishReason?: AiProviderFinishReason;
+};
+
+export type AiProviderCallTrace = {
+  provider: AiProviderId;
+  attempts: number;
+  retryOccurred: boolean;
+  attemptsDetail: readonly AiProviderAttemptRecord[];
+};
+
 export type ClassifiedAiProviderOutput = AiProviderOutput & {
   failureCategory?: AiProviderFailureCategory;
+  callTrace?: AiProviderCallTrace;
 };
 
 export type ClassifiedAiProvider = {

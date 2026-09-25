@@ -1,18 +1,21 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless
+`CURRENT_STATE.md` and the repository confirm them.
 
-# DEVELOPMENT_RULES.md — V10.6 ENGINEERING RULES
+# DEVELOPMENT_RULES.md — V10.7 ENGINEERING RULES
 
 ## 1. General
 
@@ -176,7 +179,9 @@ Do not optimize blindly. Measure first.
 
 ## 11. Documentation
 
-Architecture-changing work must update the relevant V10.6 documentation.
+Architecture-changing work must update the relevant V10.7 documentation.
+Preserve historical V10.6 phase notes, audits, and provenance. Do not
+globally rewrite old version numbers.
 
 ## 12. No Silent Breaking Changes
 
@@ -320,3 +325,26 @@ Keep Product, Order, Purchase, and Payment separate.
 - Phase 9E is the client foundation integration gate. Keep
   `Web/Android/iOS → shared client → /api/v1 → engines`. Do not ship
   Android/iOS apps, authentication, or extra product APIs in this gate.
+
+## 20. Product Extension Rules (V10.7)
+
+**REUSE CORE CAPABILITIES BEFORE CREATING PARALLEL ENGINES.**
+
+Preferred sequence:
+
+Existing Core Capability → Extension / Adapter / New Product Experience →
+new core capability only if the existing abstraction cannot satisfy the
+domain.
+
+Do not duplicate Assessment Engine, content models, Learner Intelligence,
+identity, entitlement, Search, or AI grounding because a new product has a
+different frontend, brand, or market.
+
+SAJIB ATLAS and SAJLAS are brand/deployment surfaces over one core.
+Do not split the repository, add domains/DNS/redirects, or implement
+future B2B/API/mobile products from the V10.7 possibility map unless a
+later increment is explicitly designed.
+
+Brand architecture must not alter the Universal Content Schema, editorial
+provenance, canonical production pipeline, quality gate, Live Content
+Review, or Geography production packages.

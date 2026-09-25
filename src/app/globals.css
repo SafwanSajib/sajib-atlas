@@ -164,3 +164,12 @@ a { color: inherit; text-decoration: none; }
   .ai-controls { grid-template-columns: 1fr; }
 }
 
+.studio-panel { background: #0a1e26; border: 1px solid var(--line); margin-bottom: 28px; padding: 24px; }
+.studio-panel label { color: var(--cyan); display: block; font-family: var(--font-geist-mono), monospace; font-size: 10px; letter-spacing: .16em; margin-top: 16px; text-transform: uppercase; }
+.studio-panel input, .studio-panel textarea { background: var(--ink); border: 1px solid var(--line); color: var(--paper); display: block; font: inherit; margin-top: 8px; padding: 12px; width: 100%; }
+.studio-panel input:focus-visible, .studio-panel textarea:focus-visible, .studio-panel button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.studio-panel .button-row { margin-top: 20px; }
+.studio-source-item { border: 1px solid var(--line); margin: 16px 0; padding: 16px; }
+.studio-source-item legend { color: var(--cyan); font-family: var(--font-geist-mono), monospace; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.studio-panel select { background: var(--ink); border: 1px solid var(--line); color: var(--paper); display: block; font: inherit; margin-top: 8px; padding: 12px; width: 100%; }
+

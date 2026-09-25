@@ -22,7 +22,12 @@ export type CreateAiProviderRouterInput = {
 };
 
 function publicOutput(output: ClassifiedAiProviderOutput): AiProviderOutput {
-  return { status: output.status, text: output.text };
+  const result: AiProviderOutput & { callTrace?: ClassifiedAiProviderOutput["callTrace"] } = {
+    status: output.status,
+    text: output.text,
+  };
+  if (output.callTrace) result.callTrace = output.callTrace;
+  return result;
 }
 
 function unavailable(text: string, category: ClassifiedAiProviderOutput["failureCategory"]): ClassifiedAiProviderOutput {

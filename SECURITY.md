@@ -1,18 +1,26 @@
 # SAJIB ATLAS — DOCUMENT CONTROL
 
-**Architecture Baseline:** V10.6  
-**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`  
-**Document Set:** V10.6  
+**Architecture Baseline:** V10.7
+**Master Vision:** `SAJIB_ATLAS_Universal_Master_Vision_v10_6.md`
+**Document Set:** V10.7
 **Status:** Active / synchronized  
 **Repository:** Implementation source of truth  
 **Authority Rule:** Repository/runtime/test evidence overrides strategic assumptions.
 
-> This document is part of the V10.6 documentation constitution. If a document
-conflicts with the Master Vision, the conflict must be resolved explicitly and
-the affected documents must be synchronized. Do not silently maintain divergent
-versions.
+> This document is part of the V10.7 documentation constitution. V10.7 is the
+current active architecture baseline. V10.6 remains the historical engineering
+foundation (Phase 0–9F and canonical content architecture). The Master Vision
+document remains the V10.6 strategic constitution and is not rewritten here.
+If a document conflicts with repository evidence, repository evidence wins.
+Product, brand, and platform expansion claims are not implemented unless
+`CURRENT_STATE.md` and the repository confirm them.
 
-# SECURITY.md — V10.6 SECURITY CONSTITUTION
+# SECURITY.md — V10.7 SECURITY CONSTITUTION
+
+The security architecture is unchanged by V10.7. Brand surfaces (SAJIB ATLAS,
+SAJLAS) and logical domains do not create separate authentication,
+authorization, entitlement, or data stores. A second app, DNS cutover, or
+independent security stack is not authorized by the V10.7 documentation.
 
 ## 1. Security Objective
 
