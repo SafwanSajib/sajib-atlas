@@ -1447,3 +1447,17 @@ Lint still fails only on three pre-existing findings, which this work does not c
 - Push or merge. This work is local on `feature/editorial-cms-workspace` in `sajib-atlas-editorial-cms`. The original `feature/content-production-studio` workspace is separate.
 
 Canonical Geography packages, the review registry, the Quality Gate, the production workflow, assessment, learner state, and search were not modified by the Editorial CMS.
+
+## 62. Canonical Content Publication Wave 1 (implemented)
+
+Canonical Content Publication Wave 1 implements the publication workflow for four Geography topics: Water Cycle, Latitude & Longitude, Atmosphere, and Plate Tectonics. The workflow is now implemented and automated verification is GREEN.
+
+Key Wave 1 publication status:
+
+- Canonical publication occurs only when a legitimate operator review packet (editorial + academic-source reviews, both passed) is supplied at execution. Missing or invalid operator packets result in a `blocked` outcome; no registry mutation occurs.
+- The committed canonical registry (`getReviewRecords`) still returns `draft` for all four Wave 1 topics after automated verification. The verifier exercises real publication on clones and restores the original `draft` records via `replaceReviewRecord`.
+- `projectProductionDelivery` returns a record only after `publishProduction` succeeds; it returns `undefined` for draft, review, approved, or blocked states.
+- `/geography/[topic]` still reads from `src/lib/geography-data.ts` (legacy reference payload). No publish control has been added to the public Geography route.
+- This does NOT mean the four Geography topics are live-published on the public site. The public study surface remains the legacy Geography route; canonical publication is an authoring boundary that produces delivery records for future consumers, not an immediate public release.
+- Per-topic isolation is preserved: if one topic fails, already-published siblings are not rolled back. Publication idempotency is preserved: re-running on a `published` topic returns `published` without re-publishing or appending duplicate reviews.
+- Verification: `npm run verify:content-production`, `npm run verify:content-review`, `npm run verify:content-quality`, `npx tsc --noEmit --pretty false` all pass. No legacy Geography or package files were modified.

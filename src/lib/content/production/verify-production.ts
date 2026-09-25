@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { pilotPackages } from "@/lib/content/pilot/index";
 import { buildReviewProjection } from "@/lib/content/review/projection";
-import { getReviewRecord } from "@/lib/content/review/registry";
+import { getReviewRecord, replaceReviewRecord } from "@/lib/content/review/registry";
 import { createMemoryBatchJobStore, createPersistentBatch, recordEditorialHandoff } from "@/lib/content-studio/batch-engine/index";
 import { commitEditorialSave, commitMarkReadyForApproval, commitMarkReadyForReview, createMemoryEditorialDraftStore, openEditorialDraft } from "@/lib/content-studio/editorial/index";
 import { submitReadyEditorialRecord } from "./editorial-handoff";
+import { runPublicationWave } from "./wave";
 import {
   approveProduction,
   archiveProduction,
@@ -497,5 +498,120 @@ for (const source of [handoffSource, workflowSource.slice(workflowSource.indexOf
 }
 assert.equal(handoffSource.includes("approveProduction"), false);
 assert.equal(handoffSource.includes("publishProduction"), false);
+
+const waveIds = [
+  "topic/geography/water-cycle",
+  "topic/geography/latitude-and-longitude",
+  "topic/geography/atmosphere",
+  "topic/geography/plate-tectonics",
+] as const;
+for (const id of waveIds) {
+  const record = getReviewRecord(id);
+  assert.ok(record, `wave inventory ${id}`);
+  assert.equal(record.content.topic.contentVersion, 1, `wave inventory ${id} version`);
+  assert.equal(record.workflowState, "draft", `wave inventory ${id} workflow`);
+  assert.equal(record.reviews.length, 0, `wave inventory ${id} reviews`);
+  assert.equal(record.qualitySnapshot?.contentId, id, `wave inventory ${id} snapshot id`);
+  assert.equal(record.qualitySnapshot?.contentVersion, 1, `wave inventory ${id} snapshot version`);
+  assert.equal(record.qualitySnapshot?.report.overall, "pass", `wave inventory ${id} overall`);
+  assert.equal(projectProductionDelivery(record), undefined, `wave inventory ${id} delivery`);
+}
+
+const waveBlocked = runPublicationWave({
+  topicIds: waveIds,
+  publishedAt: "2026-09-24T00:00:00.000Z",
+});
+assert.equal(waveBlocked.length, 4, "wave missing function");
+for (const result of waveBlocked) {
+  assert.equal(result.outcome, "blocked");
+  assert.deepEqual(result.blockers, ["missing-editorial-review", "missing-academic-source-review"]);
+  assert.equal(result.editorialFile, "no editorial file");
+  assert.equal(result.delivery, "undefined");
+  assert.equal(result.aiGroundable, false);
+  assert.equal(result.workflowState, "draft");
+  assert.equal(result.contentVersion, 1);
+  assert.equal(getReviewRecord(result.topicId)?.workflowState, "draft");
+}
+
+const emptyReviewer = runPublicationWave({
+  topicIds: ["topic/geography/water-cycle"],
+  operatorReviews: [
+    { type: "editorial", outcome: "passed", reviewerId: " ", reviewedAt: "2026-09-24T00:00:00.000Z" },
+    { type: "academic-source", outcome: "passed", reviewerId: "operator/test-academic", reviewedAt: "2026-09-24T00:01:00.000Z" },
+  ],
+  publishedAt: "2026-09-24T00:02:00.000Z",
+});
+assert.equal(emptyReviewer[0]?.outcome, "blocked", "wave empty reviewer");
+assert.ok(emptyReviewer[0]?.blockers.includes("reviewer and review timestamp are required"));
+assert.equal(getReviewRecord("topic/geography/water-cycle")?.reviews.length, 0);
+assert.equal("READY WITH WARNINGS".includes("ProductionReview"), false, "wave audit file is not a review");
+
+const waveTestOperatorReviews = [
+  { type: "editorial" as const, outcome: "passed" as const, reviewerId: "operator/test-editorial", reviewedAt: "2026-09-24T00:00:00.000Z" },
+  { type: "academic-source" as const, outcome: "passed" as const, reviewerId: "operator/test-academic", reviewedAt: "2026-09-24T00:01:00.000Z" },
+];
+function publishTopic(topicId: string) {
+  const before = getReviewRecord(topicId);
+  assert.ok(before);
+  const snapshot = structuredClone(before);
+  const [result] = runPublicationWave({
+    topicIds: [topicId],
+    operatorReviews: waveTestOperatorReviews,
+    publishedAt: "2026-09-24T00:02:00.000Z",
+  });
+  assert.equal(result?.outcome, "published", `wave publish ${topicId}`);
+  assert.equal(result?.delivery, "returned");
+  assert.equal(result?.aiGroundable, true);
+  assert.equal(result?.contentVersion, 1);
+  const published = getReviewRecord(topicId);
+  assert.equal(published?.workflowState, "published");
+  assert.equal(published?.content.topic.contentVersion, 1);
+  assert.equal(published?.publishedAt, "2026-09-24T00:02:00.000Z");
+  assert.equal(published?.reviews.length, 2);
+  assert.equal(projectProductionDelivery(published!), published);
+  replaceReviewRecord(topicId, snapshot);
+  assert.equal(getReviewRecord(topicId)?.workflowState, "draft");
+  assert.equal(getReviewRecord(topicId)?.reviews.length, 0);
+}
+publishTopic("topic/geography/water-cycle");
+publishTopic("topic/geography/latitude-and-longitude");
+assert.equal(getReviewRecord("topic/geography/atmosphere")?.qualitySnapshot?.report.overall, "pass", "wave atmosphere pre-wave snapshot");
+publishTopic("topic/geography/atmosphere");
+publishTopic("topic/geography/plate-tectonics");
+
+// Task 8: isolation + per-topic packet map + idempotency.
+// Publish Water Cycle, then re-run with a per-topic map that carries a packet for Water Cycle
+// only. Latitude stays blocked and must not revert the already-published Water Cycle.
+const isolatesBefore = getReviewRecord("topic/geography/water-cycle");
+assert.ok(isolatesBefore, "wave isolates water cycle before");
+const [isolatesPublished] = runPublicationWave({
+  topicIds: ["topic/geography/water-cycle"],
+  operatorReviews: waveTestOperatorReviews,
+  publishedAt: "2026-09-24T01:00:00.000Z",
+});
+assert.equal(isolatesPublished.outcome, "published", "wave isolates water cycle published");
+const [isolatesRepeat, isolatesLatBlocked] = runPublicationWave({
+  topicIds: ["topic/geography/water-cycle", "topic/geography/latitude-and-longitude"],
+  operatorReviewsByTopic: { "topic/geography/water-cycle": waveTestOperatorReviews },
+  publishedAt: "2026-09-24T01:01:00.000Z",
+});
+assert.equal(isolatesRepeat.outcome, "published", "wave isolates idempotent re-run on published");
+const isolatesAfter = getReviewRecord("topic/geography/water-cycle");
+assert.equal(isolatesAfter?.publishedAt, "2026-09-24T01:00:00.000Z", "wave isolates publishedAt preserved");
+assert.equal(isolatesAfter?.reviews.length, 2, "wave isolates no duplicate review rows");
+assert.equal(isolatesLatBlocked.outcome, "blocked", "wave isolates latitude blocked without packet");
+assert.ok(isolatesLatBlocked.blockers.includes("missing-editorial-review"), "wave isolates latitude missing editorial");
+assert.equal(getReviewRecord("topic/geography/latitude-and-longitude")?.workflowState, "draft", "wave isolates latitude stayed draft");
+replaceReviewRecord("topic/geography/water-cycle", isolatesBefore!);
+assert.equal(getReviewRecord("topic/geography/water-cycle")?.workflowState, "draft", "wave isolates restore water cycle draft");
+assert.equal(getReviewRecord("topic/geography/water-cycle")?.reviews.length, 0, "wave isolates restore review count");
+assert.equal(getReviewRecord("topic/geography/water-cycle")?.publishedAt, undefined, "wave isolates restore publishedAt");
+
+// Task 10: wave source isolation. The wave executor must not import or reference the
+// legacy/reference systems it is forbidden from touching.
+const waveSource = readFileSync(new URL("./wave.ts", import.meta.url), "utf8");
+for (const forbidden of ["src/lib/search", "assessment-engine", "learner-intelligence", "entitlement", "commerce", "geography-data"]) {
+  assert.equal(waveSource.includes(forbidden), false, `wave source must not reference ${forbidden}`);
+}
 
 console.log("Canonical content production verification passed.");
